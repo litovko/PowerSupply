@@ -1,31 +1,71 @@
 import QtQuick 2.7
 import QtQuick.Window 2.2
+import Qt.labs.settings 1.0
+import Gyco 1.0
 
 Window {
+    id: win
     visible: true
-    width: 640
-    height: 480
-    title: qsTr("Hello World")
-
+    title: "HYCO ТК-15 Телеметрия"
+    color: "black"
+    height: 700
+    width: 800
+    //color: "transparent"
     MouseArea {
         anchors.fill: parent
         onClicked: {
-            console.log(qsTr('Clicked on f . Text: "' + textEdit.text + '"'))
+            win.fcommand("FULLSCREEN")
         }
     }
+    Settings {
+        property alias x: win.x
+        property alias y: win.y
+        property alias width: win.width
+        property alias height: win.height
+    }
+    PSModel {
+        id: ps
+    }
 
-    TextEdit {
-        id: textEdit
-        text: qsTr("Enter some text...")
-        verticalAlignment: Text.AlignVCenter
-        anchors.top: parent.top
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.topMargin: 20
-        Rectangle {
-            anchors.fill: parent
-            anchors.margins: -10
-            color: "transparent"
-            border.width: 1
+    function fcommand (cmd) {
+        console.log ("COMMAND="+cmd)
+        switch(cmd) {
+          case "QUIT":
+              Qt.quit();
+              break;
+          case "PLAY":
+
+              break;
+
+          case "PROGRAM SETTINGS":
+
+              break;
+          case "HELP":
+
+              break;
+
+          case "MENU":
+
+              break;
+          case "FULLSCREEN":
+              win.visibility = win.visibility===Window.FullScreen?Window.Maximized:Window.FullScreen;
+              break;
+        }
+
+    }
+
+    Rectangle {
+        id: rect
+        //color: "black";
+        color: "transparent"
+        anchors.fill: parent
+        border.color: "yellow"
+        radius:20
+        border.width: 3
+        focus:true
+        MyButton {
+        anchors.centerIn: parent
         }
     }
 }
+
