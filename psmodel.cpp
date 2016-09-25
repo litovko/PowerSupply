@@ -19,7 +19,7 @@ cPSmodel::cPSmodel(QObject *parent) : QObject(parent)
     connect(this, SIGNAL(engineChanged()),this, SLOT(sendData()));
     connect(this, SIGNAL(pumpChanged()),this, SLOT(sendData()));
     //connect(this, SIGNAL(joystickChanged()),this, SLOT(sendData()));
-    connect(this, SIGNAL(cameraChanged()),this, SLOT(sendData()));
+    connect(this, SIGNAL(powerChanged()),this, SLOT(sendData()));
 
     connect(&timer_connect, SIGNAL(timeout()), this, SLOT(start_client()));
     timer_connect.start(m_timer_connect_interval);
@@ -28,27 +28,27 @@ cPSmodel::cPSmodel(QObject *parent) : QObject(parent)
 }
 void cPSmodel::saveSettings()
 {
-    qDebug()<<"Rig saveSettings addres:"<<m_address<<"port:"<<m_port;
-    QSettings settings("HYCO", "Rig Console");
-    settings.setValue("RigAddress",m_address);
-    settings.setValue("RigPort",m_port);
-    settings.setValue("RigFreerun",m_freerun);
-    settings.setValue("RigSendInterval",m_timer_send_interval);
-    settings.setValue("RigConnectInterval",m_timer_connect_interval);
-    settings.setValue("RigCheckType",m_check_type);
+    qDebug()<<"PS saveSettings addres:"<<m_address<<"port:"<<m_port;
+    QSettings settings("HYCO", "PS Console");
+    settings.setValue("PSAddress",m_address);
+    settings.setValue("PSPort",m_port);
+    settings.setValue("PSFreerun",m_freerun);
+    settings.setValue("PSSendInterval",m_timer_send_interval);
+    settings.setValue("PSConnectInterval",m_timer_connect_interval);
+    settings.setValue("PSCheckType",m_check_type);
 
 }
 
 void cPSmodel::readSettings()
 {
 
-    QSettings settings("HYCO", "Rig Console");
-    m_address=settings.value("RigAddress","localhost").toString();
-    m_port=settings.value("RigPort","1212").toInt();
-    setFreerun(settings.value("RigFreerun","0").toInt());
-    m_timer_send_interval=settings.value("RigSendInterval","2000").toInt();
-    m_timer_connect_interval=settings.value("RigConnectInterval","30000").toInt();
-    m_check_type=settings.value("RigCheckType","false").toBool();
+    QSettings settings("HYCO", "PS Console");
+    m_address=settings.value("PSAddress","localhost").toString();
+    m_port=settings.value("PSPort","1212").toInt();
+    setFreerun(settings.value("PSFreerun","0").toInt());
+    m_timer_send_interval=settings.value("PSSendInterval","2000").toInt();
+    m_timer_connect_interval=settings.value("PSConnectInterval","30000").toInt();
+    m_check_type=settings.value("PSCheckType","false").toBool();
 
 }
 
@@ -141,7 +141,7 @@ void cPSmodel::setRigtype(const QString &rigtype)
     if (m_rigtype == rigtype) return;
     m_rigtype = rigtype;
     emit rigtypeChanged();
-    qDebug()<<"Rig: rigtype:"<<m_rigtype;
+    qDebug()<<"PS: rigtype:"<<m_rigtype;
 }
 
 QString cPSmodel::rigtype() const
@@ -153,7 +153,7 @@ void cPSmodel::setLamp(const bool &lamp)
 {
     m_lamp = lamp;
     emit lampChanged();
-    qDebug()<<"RIG: Lamp swithced";
+    qDebug()<<"PS: Lamp swithced";
 }
 
 bool cPSmodel::lamp() const
@@ -161,16 +161,16 @@ bool cPSmodel::lamp() const
     return m_lamp;
 }
 
-void cPSmodel::setCamera(const bool &camera)
+void cPSmodel::setPower(const bool &power)
 {
-    m_camera = camera;
-    emit cameraChanged();
-    qDebug()<<"Rig Camera power switched";
+    m_power = power;
+    emit powerChanged();
+    qDebug()<<"PS power  switched";
 }
 
-bool cPSmodel::camera() const
+bool cPSmodel::power() const
 {
-    return m_camera;
+    return m_power;
 }
 
 void cPSmodel::setEngine(const bool &engine)
@@ -301,20 +301,20 @@ void cPSmodel::start_client()
 {
     if (m_client_connected) return;
     bytesWritten = 0;
-    qDebug()<<"Rig Start client >>>"<<m_address<<"poprt"<<::QString().number(m_port);
+    qDebug()<<"PS Start client >>>"<<m_address<<"poprt"<<::QString().number(m_port);
     
     tcpClient.connectToHost(m_address, m_port);
 
 }
 void cPSmodel::clientConnected()
 {
-    qDebug()<<"Rig Client connected to address >>>"+this->address()+" port:"+ ::QString().number(m_port);
+    qDebug()<<"PS Client connected to address >>>"+this->address()+" port:"+ ::QString().number(m_port);
     m_client_connected=true;
     emit client_connectedChanged();
 }
 void cPSmodel::clientDisconnected()
 {
-    qDebug()<<"Rig Client disconnected form address >>>"+this->address()+" port:"+ this->port();
+    qDebug()<<"PS Client disconnected form address >>>"+this->address()+" port:"+ this->port();
     m_client_connected=false;
     m_good_data=false;
     m_pressure=0;
@@ -348,7 +348,7 @@ void cPSmodel::displayError(QAbstractSocket::SocketError socketError)
 {
     if (socketError == QTcpSocket::RemoteHostClosedError)   //litovko надо уточнить зачем эта проверка
         return;
-    qDebug()<<"Rig Network error >>>"+tcpClient.errorString();
+    qDebug()<<"PS Network error >>>"+tcpClient.errorString();
 
 
     tcpClient.close();
@@ -364,7 +364,7 @@ void cPSmodel::sendData()
     data[0] = m_engine*1
             +   m_pump*2
             +   m_lamp*4
-            + m_camera*8;
+            + m_power*8;
     QString Data; // Строка отправки данных.
 // проверяем, есть ли подключение клиента. Если подключения нет, то ничего не отправляем.
     if (!m_client_connected) return;
@@ -376,7 +376,7 @@ void cPSmodel::sendData()
     if (m_rigtype=="gkgbu") Data=Data+";ana3:"+::QString().number(scaling(m_joystick_x1),10)+";gmod:"+m_gmod;
 
     Data=Data+";dig1:"+::QString().number(data[0],10)+"}CONSDATA";
-    qDebug()<<"Rig - send data: "<<Data;
+    qDebug()<<"PS - send data: "<<Data;
 
     bytesToWrite = (int)tcpClient.write(::QByteArray(Data.toLatin1()).data());
     if (bytesToWrite<0)qWarning()<<"Rig: Something wrong due to send data >>>"+tcpClient.errorString();
@@ -392,7 +392,7 @@ void cPSmodel::readData()
     QList<QByteArray> split;
     int m;
     Data = tcpClient.readAll();
-    qDebug()<<"Rig read :"<<Data;
+    qDebug()<<"PS read :"<<Data;
     // {toil=29;poil=70;drpm=15;pwrv=33;pwra=3}FAFBFCFD
     //m_good_data = false; emit good_dataChanged();
     if (Data.startsWith("{")&&(m=Data.indexOf("}"))>0) {
@@ -411,49 +411,49 @@ void cPSmodel::readData()
              m=s.indexOf(":");
              val=s.mid(m+1); //данные после ":"
              s=s.left(m); // названия тэга
-            qDebug()<<"Rig tag:"<<s<<"value:"<<val;
+            qDebug()<<"PS tag:"<<s<<"value:"<<val;
             if (s=="toil") {
                 m_temperature=val.toInt(&ok,10); emit temperatureChanged();
                 if(!ok) {m_good_data = false; emit good_dataChanged();
-                qWarning()<<"Rig no good data for "<<"toil:"<<val;}
+                qWarning()<<"PS no good data for "<<"toil:"<<val;}
             }
             if (s=="poil"){
                 m_pressure=val.toInt(&ok,10); emit pressureChanged();
                 if(!ok) {m_good_data = false; emit good_dataChanged();
-                qWarning()<<"Rig no good data for "<<"poil:"<<val;}
+                qWarning()<<"PS no good data for "<<"poil:"<<val;}
             }
             if (s=="drpm"){
                 m_turns=val.toInt(&ok,10); emit turnsChanged();
                 if(!ok) {m_good_data = false; emit good_dataChanged();
-                qWarning()<<"Rig no good data for "<<"drpm:"<<val;}
+                qWarning()<<"PS no good data for "<<"drpm:"<<val;}
             }
             if (s=="pwrv"){
                 m_voltage=val.toInt(&ok,10); emit voltageChanged();
                 if(!ok) {m_good_data = false; emit good_dataChanged();
-                qWarning()<<"Rig no good data for "<<"pwrv:"<<val;}
+                qWarning()<<"PS no good data for "<<"pwrv:"<<val;}
             }
             if (s=="dc1v"){
                 setVoltage24(val.toInt(&ok,10));
                 if(!ok) {m_good_data = false; emit good_dataChanged();
-                qWarning()<<"Rig no good data for "<<"dc1v:"<<val;}
+                qWarning()<<"PS no good data for "<<"dc1v:"<<val;}
             }
             if (s=="pwra"){
                 m_ampere=val.toInt(&ok,10); emit ampereChanged();
                 if(!ok) {m_good_data = false; emit good_dataChanged();
-                qWarning()<<"Rig no good data for "<<"pwra:"<<val;}
+                qWarning()<<"PS no good data for "<<"pwra:"<<val;}
             }
             if (s=="type"){
                 if (check_type()) setRigtype(val);
                 //m_rigtype=val; emit rigtypeChanged();
                 if (m_rigtype=="grab2"||m_rigtype=="grab6"||m_rigtype=="gkgbu"||m_rigtype=="tk-15") ok=true;
                 if(!ok) {m_good_data = false; emit good_dataChanged();
-                qWarning()<<"Rig: no good data for "<<"type:"<<val;}
+                qWarning()<<"PS: no good data for "<<"type:"<<val;}
             }
          }
     }
     else {
         m_good_data=false; good_dataChanged();
-        qWarning()<<"Rig: wrong data receved";
+        qWarning()<<"PS: wrong data receved";
     }
 }
 
@@ -461,7 +461,7 @@ int cPSmodel::scaling(const int &value)
 {
    if (value==0) return 0;
    float df=127.0*m_freerun/100.0;
-   qDebug()<<"Rig - scale df: "<<df<<"f:"<<-df + value*(100-m_freerun)/100.0 <<" v:"<<value;
+   qDebug()<<"PS - scale df: "<<df<<"f:"<<-df + value*(100-m_freerun)/100.0 <<" v:"<<value;
    if  (value>0)
      return ceil(df + value*(100-m_freerun)/100.0);
    else

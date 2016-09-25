@@ -2,5 +2,8 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>MyButton.qml</file>
+        <file>MyLamp.qml</file>
+        <file>LampBoard.qml</file>
+        <file>ButtonBoard.qml</file>
     </qresource>
 </RCC>

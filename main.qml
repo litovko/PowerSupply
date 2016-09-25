@@ -1,5 +1,5 @@
-import QtQuick 2.7
-import QtQuick.Window 2.2
+import QtQuick 2.5
+import QtQuick.Window 2.0
 import Qt.labs.settings 1.0
 import Gyco 1.0
 
@@ -37,8 +37,8 @@ Window {
 
               break;
 
-          case "PROGRAM SETTINGS":
-
+          case "POWER ON":
+              console.log("TO POWER ON")
               break;
           case "HELP":
 
@@ -65,7 +65,35 @@ Window {
         focus:true
         MyButton {
         anchors.centerIn: parent
+        onMybuttonPressed: fcommand("POWER ON")
         }
+        LampBoard{
+            id: lb
+            height: 70
+            anchors.margins: 5
+            anchors.left: parent.left; anchors.top: parent.top; anchors.right: parent.right
+        }
+        ButtonBoard{
+            height: 70
+            anchors.margins: 5
+            anchors.left: parent.left; anchors.right: parent.right; anchors.top: lb.bottom
+        }
+//        Rectangle {
+//            anchors.top: lb.bottom
+//            anchors.topMargin: 0
+//            height: 20
+
+//            anchors.right: parent.right
+
+//            anchors.left: parent.left
+//            anchors.leftMargin: 0
+//            border.color: "white"
+
+//        }
+
+
+
     }
+
 }
 

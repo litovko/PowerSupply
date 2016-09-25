@@ -32,7 +32,7 @@ class cPSmodel : public QObject
     Q_PROPERTY(int joystick_x2 READ joystick_x2 WRITE setJoystick_x2 NOTIFY joystick_x2Changed)
     Q_PROPERTY(int joystick_y2 READ joystick_y2 WRITE setJoystick_y2 NOTIFY joystick_y2Changed)
 
-    Q_PROPERTY(bool camera READ camera WRITE setCamera NOTIFY cameraChanged)
+    Q_PROPERTY(bool power READ power WRITE setPower NOTIFY powerChanged)
     //############ адрес и порт и другие параметры
     Q_PROPERTY(QString address READ address WRITE setAddress NOTIFY addressChanged)
     Q_PROPERTY(int port READ port WRITE setPort NOTIFY portChanged)
@@ -89,8 +89,8 @@ public:
     void setLamp(const bool &lamp);
     bool lamp() const;
 
-    void setCamera(const bool &camera);
-    bool camera() const;
+    void setPower(const bool &power);
+    bool power() const;
 
     void setEngine(const bool &engine);
     bool engine() const;
@@ -140,7 +140,7 @@ signals:
     void joystick_y1Changed();
     void joystick_x2Changed();
     void joystick_y2Changed();
-    void cameraChanged();
+    void powerChanged();
     void addressChanged();
     void portChanged();
     void timer_send_intervalChanged();
@@ -184,7 +184,7 @@ private:
 
     //############ Данные для отправки
     bool m_lamp=false;
-    bool m_camera=false;
+    bool m_power=false;
     bool m_engine=false;
     bool m_pump=false;
     int m_joystick=0;

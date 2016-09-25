@@ -4,11 +4,13 @@ Item {
     property string text: "Item1"
     property string command: "Command"
     property bool pressed: false
-
+    signal mybuttonPressed;
     Rectangle {
         id: body
         visible: true
         z:1
+//        width: parent.width
+//        height: parent.height
         anchors.fill: parent
         color: "#030c53"
 
@@ -46,8 +48,8 @@ Item {
             hoverEnabled: true
             acceptedButtons: Qt.LeftButton
             //propagateComposedEvents: true
-            onPressed: mybutton.pressed=true
-            onReleased: mybutton.pressed=false
+            onPressed: {mybutton.pressed=true;console.log("Button was pressed")}
+            onReleased: {mybutton.pressed=false; mybutton.mybuttonPressed();console.log("Button was released")}
         }
     }
 
