@@ -92,9 +92,15 @@ Window {
             anchors.left: parent.left; anchors.top: parent.top; anchors.right: parent.right
         }
         ButtonBoard{
+            id: bb
             height: 70
             anchors.margins: 5
             anchors.left: parent.left; anchors.right: parent.right; anchors.top: lb.bottom
+        }
+        PriborBoard{
+            height: 140
+            anchors.margins: 5
+            anchors.left: parent.left; anchors.right: parent.right; anchors.top: bb.bottom
         }
     }
 

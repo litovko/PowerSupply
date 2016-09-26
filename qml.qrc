@@ -5,5 +5,7 @@
         <file>MyLamp.qml</file>
         <file>LampBoard.qml</file>
         <file>ButtonBoard.qml</file>
+        <file>Pribor.qml</file>
+        <file>PriborBoard.qml</file>
     </qresource>
 </RCC>

@@ -151,12 +151,12 @@ public slots:
     void readData(); //расклаываем полученные от сервера данные по параметрам
 private:
 
-    int m_current1=5;
-    int m_current2=5;
-    int m_current3=5;
-    int m_voltage1=251;
-    int m_voltage2=251;
-    int m_voltage3=251;
+    int m_current1=1;
+    int m_current2=2;
+    int m_current3=3;
+    int m_voltage1=2501;
+    int m_voltage2=2502;
+    int m_voltage3=2503;
     int m_temperature=25;
     int m_humid=60;
 
