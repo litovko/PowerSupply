@@ -10,7 +10,8 @@ Item {
         height: parent.height
         width: parent.width
         Row{
-          anchors.fill: parent
+          //anchors.fill: parent
+          anchors.centerIn:  parent
           anchors.margins:  10
           spacing: 20
           MyButton {
@@ -31,8 +32,8 @@ Item {
               anchors.verticalCenter: parent.verticalCenter
               width: 5
               height: 50
-              color: "#06103e"
-              border.color: "#00f5eaea"
+              color: "gray"
+              border.color: "gray"
           }
           MyButton {
             anchors.verticalCenter: parent.verticalCenter
@@ -48,6 +49,13 @@ Item {
             onMybuttonPressed: fcommand("INP2")
             text: "ВХОД ГИКО"
           }
+          Rectangle {
+              anchors.verticalCenter: parent.verticalCenter
+              width: 5
+              height: 50
+              color: "gray"
+              border.color: "gray"
+          }
           MyButton {
             anchors.verticalCenter: parent.verticalCenter
             width: 100
@@ -61,6 +69,13 @@ Item {
             height: 50
             onMybuttonPressed: fcommand("OUT2")
             text: "ВЫХ. ТК-15"
+          }
+          Rectangle {
+              anchors.verticalCenter: parent.verticalCenter
+              width: 5
+              height: 50
+              color: "gray"
+              border.color: "gray"
           }
           MyButton {
             anchors.verticalCenter: parent.verticalCenter

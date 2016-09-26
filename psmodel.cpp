@@ -15,11 +15,11 @@ cPSmodel::cPSmodel(QObject *parent) : QObject(parent)
 
     connect(&tcpClient, SIGNAL(connected()),this, SLOT(sendData())); //при установке исходящего соединения с аппаратом посылаем текущие данные.  !!! litovko
     //при изменении пользователем любого параметра сразу передаем данные
-    connect(this, SIGNAL(lampChanged()),this, SLOT(sendData()));
-    connect(this, SIGNAL(engineChanged()),this, SLOT(sendData()));
-    connect(this, SIGNAL(pumpChanged()),this, SLOT(sendData()));
+//    connect(this, SIGNAL(lampChanged()),this, SLOT(sendData()));
+//    connect(this, SIGNAL(engineChanged()),this, SLOT(sendData()));
+//    connect(this, SIGNAL(pumpChanged()),this, SLOT(sendData()));
     //connect(this, SIGNAL(joystickChanged()),this, SLOT(sendData()));
-    connect(this, SIGNAL(powerChanged()),this, SLOT(sendData()));
+//    connect(this, SIGNAL(powerChanged()),this, SLOT(sendData()));
 
     connect(&timer_connect, SIGNAL(timeout()), this, SLOT(start_client()));
     timer_connect.start(m_timer_connect_interval);
@@ -32,10 +32,9 @@ void cPSmodel::saveSettings()
     QSettings settings("HYCO", "PS Console");
     settings.setValue("PSAddress",m_address);
     settings.setValue("PSPort",m_port);
-    settings.setValue("PSFreerun",m_freerun);
     settings.setValue("PSSendInterval",m_timer_send_interval);
     settings.setValue("PSConnectInterval",m_timer_connect_interval);
-    settings.setValue("PSCheckType",m_check_type);
+
 
 }
 
@@ -45,10 +44,9 @@ void cPSmodel::readSettings()
     QSettings settings("HYCO", "PS Console");
     m_address=settings.value("PSAddress","localhost").toString();
     m_port=settings.value("PSPort","1212").toInt();
-    setFreerun(settings.value("PSFreerun","0").toInt());
     m_timer_send_interval=settings.value("PSSendInterval","2000").toInt();
     m_timer_connect_interval=settings.value("PSConnectInterval","30000").toInt();
-    m_check_type=settings.value("PSCheckType","false").toBool();
+
 
 }
 
@@ -58,75 +56,21 @@ void cPSmodel::updateSendTimer()
     timer_send.start(m_timer_send_interval);
 }
 
-void cPSmodel::setPressure(const int &pressure)
+void cPSmodel::setCurrent1(const int &current1)
 {
-    m_pressure = pressure;
-    emit pressureChanged();
+    if(current1==m_current1) return;
+    m_current1 = current1;
+    emit current1Changed();
 }
 
-int cPSmodel::pressure() const
+int cPSmodel::current1() const
 {
-    return m_pressure;
-}
-
-void cPSmodel::setOiltemp(const int &oiltemp)
-{
-    m_oiltemp = oiltemp;
-    emit oiltempChanged();
-}
-
-int cPSmodel::oiltemp() const
-{
-    return m_oiltemp;
-}
-
-
-void cPSmodel::setVoltage(const int &voltage)
-{
-    m_voltage = voltage;
-    emit voltageChanged();
-}
-
-int cPSmodel::voltage() const
-{
-    return m_voltage;
-}
-
-void cPSmodel::setVoltage24(const int &voltage)
-{
-    m_voltage24 = voltage;
-    emit voltage24Changed();
-}
-
-int cPSmodel::voltage24() const
-{
-    return m_voltage24;
-}
-
-void cPSmodel::setAmpere(const int &ampere)
-{
-    m_ampere = ampere;
-    emit ampereChanged();
-}
-
-int cPSmodel::ampere() const
-{
-    return m_ampere;
-}
-
-void cPSmodel::setTurns(const int &turns)
-{
-    m_turns = turns;
-    emit turnsChanged();
-}
-
-int cPSmodel::turns() const
-{
-    return m_turns;
+    return m_current1;
 }
 
 void cPSmodel::setTemperature(const int &temperature)
 {
+    if(m_temperature==temperature) return;
     m_temperature = temperature;
     emit temperatureChanged();
 }
@@ -136,110 +80,9 @@ int cPSmodel::temperature() const
     return m_temperature;
 }
 
-void cPSmodel::setRigtype(const QString &rigtype)
-{
-    if (m_rigtype == rigtype) return;
-    m_rigtype = rigtype;
-    emit rigtypeChanged();
-    qDebug()<<"PS: rigtype:"<<m_rigtype;
-}
-
-QString cPSmodel::rigtype() const
-{
-    return m_rigtype;
-}
-
-void cPSmodel::setLamp(const bool &lamp)
-{
-    m_lamp = lamp;
-    emit lampChanged();
-    qDebug()<<"PS: Lamp swithced";
-}
-
-bool cPSmodel::lamp() const
-{
-    return m_lamp;
-}
-
-void cPSmodel::setPower(const bool &power)
-{
-    m_power = power;
-    emit powerChanged();
-    qDebug()<<"PS power  switched";
-}
-
-bool cPSmodel::power() const
-{
-    return m_power;
-}
-
-void cPSmodel::setEngine(const bool &engine)
-{
-    m_engine = engine;
-    emit engineChanged();
-}
-
-bool cPSmodel::engine() const
-{
-    return m_engine;
-}
-
-void cPSmodel::setPump(const bool &pump)
-{
-    m_pump = pump;
-    emit pumpChanged();
-}
-
-bool cPSmodel::pump() const
-{
-    return m_pump;
-}
-
-void cPSmodel::setJoystick_x1(const int &joystick)
-{
-    m_joystick_x1 = joystick;
-    emit joystick_x1Changed();
-}
-
-int cPSmodel::joystick_x1() const
-{
-    return m_joystick_x1;
-}
-//-------------------------------
-void cPSmodel::setJoystick_y1(const int &joystick)
-{
-    m_joystick_y1 = joystick;
-    emit joystick_y1Changed();
-}
-
-int cPSmodel::joystick_y1() const
-{
-    return m_joystick_y1;
-}
-//----------------------------------
-void cPSmodel::setJoystick_x2(const int &joystick)
-{
-    m_joystick_x2 = joystick;
-    emit joystick_x2Changed();
-}
-
-int cPSmodel::joystick_x2() const
-{
-    return m_joystick_x2;
-}
-void cPSmodel::setJoystick_y2(const int &joystick)
-{
-    m_joystick_y2 = joystick;
-    emit joystick_y2Changed();
-}
-
-int cPSmodel::joystick_y2() const
-{
-    return m_joystick_y2;
-}
-
 void cPSmodel::setAddress(const QString  &address)
 {
+    if(m_address==address) return;
     m_address = address;
     emit addressChanged();
 }
@@ -256,6 +99,7 @@ int cPSmodel::port() const
 
 void cPSmodel::setPort(const int  &port)
 {
+    if(port==m_port) return;
     m_port = port;
     emit portChanged();
 }
@@ -315,22 +159,18 @@ void cPSmodel::clientConnected()
 void cPSmodel::clientDisconnected()
 {
     qDebug()<<"PS Client disconnected form address >>>"+this->address()+" port:"+ this->port();
-    m_client_connected=false;
-    m_good_data=false;
-    m_pressure=0;
-    m_oiltemp=0;
-    m_voltage=0;
-    m_ampere=0;
-    m_turns=0;
-    m_temperature=0;
-    emit pressureChanged();
-    emit oiltempChanged();
-    emit voltageChanged();
-    emit ampereChanged();
-    emit turnsChanged();
-    emit temperatureChanged();
-    emit client_connectedChanged();
-    emit good_dataChanged();
+    setClient_connected(false);
+    setGood_data(false);
+    setCurrent1(0);
+    setCurrent2(0);
+    setCurrent3(0);
+    setVoltage1(0);
+    setVoltage2(0);
+    setVoltage3(0);
+    setHumid(0);
+    setTemperature(0);
+    setPower380_on(false);
+    setPower2500_on(false);
 }
 
 
@@ -361,21 +201,18 @@ void cPSmodel::displayError(QAbstractSocket::SocketError socketError)
 void cPSmodel::sendData()
 {
     char data[5]={0,32,33,34,35};
-    data[0] = m_engine*1
-            +   m_pump*2
-            +   m_lamp*4
-            + m_power*8;
+    data[0] = m_power380_on*1
+            +   m_power2500_on*2
+            +   m_input*4
+            + m_output*8;
     QString Data; // Строка отправки данных.
 // проверяем, есть ли подключение клиента. Если подключения нет, то ничего не отправляем.
     if (!m_client_connected) return;
 //    Data="{ana1:"+::QString().number(int(m_joystick_y1*127/100),10)
 //        +";ana2:"+::QString().number(int(m_joystick_y2*127/100),10)
 //        +";dig1:"+::QString().number(data[0],10)+"}FEDCA987";
-    Data="{ana1:"+::QString().number(scaling(m_joystick_y1),10);
-    if (m_rigtype=="gkgbu"||m_rigtype=="grab6") Data=Data +";ana2:"+::QString().number(scaling(m_joystick_y2),10);
-    if (m_rigtype=="gkgbu") Data=Data+";ana3:"+::QString().number(scaling(m_joystick_x1),10)+";gmod:"+m_gmod;
+    Data="{data:}";
 
-    Data=Data+";dig1:"+::QString().number(data[0],10)+"}CONSDATA";
     qDebug()<<"PS - send data: "<<Data;
 
     bytesToWrite = (int)tcpClient.write(::QByteArray(Data.toLatin1()).data());
@@ -418,37 +255,16 @@ void cPSmodel::readData()
                 qWarning()<<"PS no good data for "<<"toil:"<<val;}
             }
             if (s=="poil"){
-                m_pressure=val.toInt(&ok,10); emit pressureChanged();
+                m_current1=val.toInt(&ok,10); emit current1Changed();
                 if(!ok) {m_good_data = false; emit good_dataChanged();
                 qWarning()<<"PS no good data for "<<"poil:"<<val;}
             }
-            if (s=="drpm"){
-                m_turns=val.toInt(&ok,10); emit turnsChanged();
-                if(!ok) {m_good_data = false; emit good_dataChanged();
-                qWarning()<<"PS no good data for "<<"drpm:"<<val;}
-            }
+
             if (s=="pwrv"){
-                m_voltage=val.toInt(&ok,10); emit voltageChanged();
+                m_voltage1=val.toInt(&ok,10); emit voltage1Changed();
                 if(!ok) {m_good_data = false; emit good_dataChanged();
                 qWarning()<<"PS no good data for "<<"pwrv:"<<val;}
-            }
-            if (s=="dc1v"){
-                setVoltage24(val.toInt(&ok,10));
-                if(!ok) {m_good_data = false; emit good_dataChanged();
-                qWarning()<<"PS no good data for "<<"dc1v:"<<val;}
-            }
-            if (s=="pwra"){
-                m_ampere=val.toInt(&ok,10); emit ampereChanged();
-                if(!ok) {m_good_data = false; emit good_dataChanged();
-                qWarning()<<"PS no good data for "<<"pwra:"<<val;}
-            }
-            if (s=="type"){
-                if (check_type()) setRigtype(val);
-                //m_rigtype=val; emit rigtypeChanged();
-                if (m_rigtype=="grab2"||m_rigtype=="grab6"||m_rigtype=="gkgbu"||m_rigtype=="tk-15") ok=true;
-                if(!ok) {m_good_data = false; emit good_dataChanged();
-                qWarning()<<"PS: no good data for "<<"type:"<<val;}
-            }
+            }                       
          }
     }
     else {
@@ -457,49 +273,142 @@ void cPSmodel::readData()
     }
 }
 
-int cPSmodel::scaling(const int &value)
+
+void cPSmodel::setGood_data(bool good_data)
 {
-   if (value==0) return 0;
-   float df=127.0*m_freerun/100.0;
-   qDebug()<<"PS - scale df: "<<df<<"f:"<<-df + value*(100-m_freerun)/100.0 <<" v:"<<value;
-   if  (value>0)
-     return ceil(df + value*(100-m_freerun)/100.0);
-   else
-     return -ceil(df - value*(100-m_freerun)/100.0);
+    if(m_good_data==good_data) return;
+    m_good_data = good_data;
+    emit good_dataChanged();
 }
 
-bool cPSmodel::check_type() const
+
+
+void cPSmodel::setClient_connected(bool client_connected)
 {
-    return m_check_type;
+    if(m_client_connected==client_connected) return;
+    m_client_connected = client_connected;
+    emit client_connectedChanged();
 }
 
-void cPSmodel::setCheck_type(bool check_type)
+
+bool cPSmodel::output() const
 {
-    m_check_type = check_type;
-    emit check_typeChanged();
+    return m_output;
 }
 
-int cPSmodel::freerun() const
+void cPSmodel::setOutput(bool output)
 {
-    return m_freerun;
+    if(output==m_output) return;
+    m_output = output;
+    emit outputChanged();
 }
 
-void cPSmodel::setFreerun(int freerun)
+bool cPSmodel::input() const
 {
-    if (m_freerun==freerun)  return;
-    if (freerun<0) m_freerun=0;
-    if (freerun>100) m_freerun=100;
-    if (freerun>=0||freerun<=100)  m_freerun = freerun;
-    emit freerunChanged();
+    return m_input;
 }
 
-QString cPSmodel::gmod() const
+void cPSmodel::setInput(bool input)
 {
-    return m_gmod;
+    if (input==m_input) return;
+    m_input = input;
+    emit inputChanged();
 }
 
-void cPSmodel::setGmod(const QString &gmod)
+bool cPSmodel::power2500_on() const
 {
-    m_gmod = gmod;
-    emit gmodChanged();
+    return m_power2500_on;
 }
+
+void cPSmodel::setPower2500_on(bool value)
+{
+    if(value==m_power2500_on) return;
+    m_power2500_on = value;
+    emit power2500_onChanged();
+}
+
+bool cPSmodel::power380_on() const
+{
+    return m_power380_on;
+}
+
+void cPSmodel::setPower380_on(bool value)
+{
+    if(value==m_power380_on) return;
+    m_power380_on = value;
+    emit power380_onChanged();
+}
+
+int cPSmodel::humid() const
+{
+    return m_humid;
+}
+
+void cPSmodel::setHumid(int humid)
+{
+    if(humid==m_humid) return;
+    m_humid = humid;
+    emit humidChanged();
+}
+
+int cPSmodel::current3() const
+{
+    return m_current3;
+}
+
+void cPSmodel::setCurrent3(int current3)
+{
+    if(current3==m_current3) return;
+    m_current3 = current3;
+    emit current3Changed();
+}
+
+int cPSmodel::current2() const
+{
+    return m_current2;
+}
+
+void cPSmodel::setCurrent2(int current2)
+{
+    if(current2==m_current2) return;
+    m_current2 = current2;
+    emit current2Changed();
+}
+
+int cPSmodel::voltage3() const
+{
+    return m_voltage3;
+}
+
+void cPSmodel::setVoltage3(int voltage3)
+{
+    if(m_voltage3==voltage3) return;
+    m_voltage3 = voltage3;
+    emit voltage3Changed();
+}
+
+int cPSmodel::voltage2() const
+{
+    return m_voltage2;
+}
+
+void cPSmodel::setVoltage2(int voltage2)
+{
+    if(m_voltage2==voltage2) return;
+    m_voltage2 = voltage2;
+    emit voltage2Changed();
+}
+
+int cPSmodel::voltage1() const
+{
+    return m_voltage1;
+}
+
+void cPSmodel::setVoltage1(int voltage1)
+{
+    if(m_voltage1==voltage1) return;
+    m_voltage1 = voltage1;
+    emit voltage1Changed();
+}
+
+

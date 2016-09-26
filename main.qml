@@ -33,12 +33,33 @@ Window {
           case "QUIT":
               Qt.quit();
               break;
-          case "PLAY":
-
-              break;
-
           case "POWER ON":
               console.log("TO POWER ON")
+              ps.power380_on=true
+              break;
+          case "POWER OFF":
+              console.log("TO POWER OFF")
+              ps.power380_on=false
+              break;
+          case "HION":
+              console.log("TO POWER ON")
+              ps.power2500_on=true
+              break;
+          case "HIOFF":
+              console.log("TO POWER OFF")
+              ps.power2500_on=false
+              break;
+          case "INP1":
+              ps.input=false;
+              break;
+          case "INP2":
+              ps.input=true;
+              break;
+          case "OUT1":
+              ps.output=false;
+              break;
+          case "OUT2":
+              ps.output=true;
               break;
           case "HELP":
 
@@ -63,10 +84,7 @@ Window {
         radius:20
         border.width: 3
         focus:true
-        MyButton {
-        anchors.centerIn: parent
-        onMybuttonPressed: fcommand("POWER ON")
-        }
+
         LampBoard{
             id: lb
             height: 70
@@ -78,21 +96,6 @@ Window {
             anchors.margins: 5
             anchors.left: parent.left; anchors.right: parent.right; anchors.top: lb.bottom
         }
-//        Rectangle {
-//            anchors.top: lb.bottom
-//            anchors.topMargin: 0
-//            height: 20
-
-//            anchors.right: parent.right
-
-//            anchors.left: parent.left
-//            anchors.leftMargin: 0
-//            border.color: "white"
-
-//        }
-
-
-
     }
 
 }
