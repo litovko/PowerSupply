@@ -29,11 +29,25 @@ cPSmodel::cPSmodel(QObject *parent) : QObject(parent)
 void cPSmodel::saveSettings()
 {
     qDebug()<<"PS saveSettings addres:"<<m_address<<"port:"<<m_port;
-    QSettings settings("HYCO", "PS Console");
+    QSettings settings; //("HYCO", "PSConsole");
     settings.setValue("PSAddress",m_address);
     settings.setValue("PSPort",m_port);
     settings.setValue("PSSendInterval",m_timer_send_interval);
     settings.setValue("PSConnectInterval",m_timer_connect_interval);
+    settings.setValue("PSConnectInterval",m_timer_connect_interval);
+    settings.setValue("Kcurrent1",m_kcurrent1);
+    settings.setValue("Kcurrent2",m_kcurrent2);
+    settings.setValue("Kcurrent3",m_kcurrent3);
+    settings.setValue("Kvoltage1",m_kvoltage1);
+    settings.setValue("Kvoltage2",m_kvoltage2);
+    settings.setValue("Kvoltage3",m_kvoltage3);
+
+    settings.setValue("THRcurrent",m_thrcurrent);
+    settings.setValue("THRvoltage",m_thrvoltage);
+    settings.setValue("THRtemperature",m_thrtemperature);
+    settings.setValue("THRhumidity",m_thrhumid);
+    settings.setValue("PStimeout",m_timeout);
+
 
 
 }
@@ -41,11 +55,24 @@ void cPSmodel::saveSettings()
 void cPSmodel::readSettings()
 {
 
-    QSettings settings("HYCO", "PS Console");
+    QSettings settings;//("HYCO", "PS Console");
     m_address=settings.value("PSAddress","localhost").toString();
     m_port=settings.value("PSPort","1212").toInt();
     m_timer_send_interval=settings.value("PSSendInterval","2000").toInt();
     m_timer_connect_interval=settings.value("PSConnectInterval","30000").toInt();
+    m_kcurrent1=settings.value("Kcurrent1",1).toDouble();
+    m_kcurrent2=settings.value("Kcurrent2",1).toDouble();
+    m_kcurrent3=settings.value("Kcurrent3",1).toDouble();
+    m_kvoltage1=settings.value("Kvoltage1",1).toDouble();
+    m_kvoltage2=settings.value("Kvoltage2",1).toDouble();
+    m_kvoltage3=settings.value("Kvoltage3",1).toDouble();
+
+    m_thrcurrent=settings.value("THRcurrent","10").toInt();
+    m_thrvoltage=settings.value("THRvoltage","2700").toInt();
+    m_thrtemperature=settings.value("THRtemperature","60").toInt();
+    m_thrhumid=settings.value("THRhumidity","80").toInt();
+    m_timeout=settings.value("PStimeout","10").toInt();
+
 
 
 }
@@ -201,8 +228,8 @@ void cPSmodel::displayError(QAbstractSocket::SocketError socketError)
 void cPSmodel::sendData()
 {
     char data[5]={0,32,33,34,35};
-    data[0] = m_power380_on*1
-            +   m_power2500_on*2
+    data[0] = m_power2500_on*1
+            +   m_power380_on*2
             +   m_input*4
             + m_output*8;
     QString Data; // Строка отправки данных.
@@ -211,7 +238,19 @@ void cPSmodel::sendData()
 //    Data="{ana1:"+::QString().number(int(m_joystick_y1*127/100),10)
 //        +";ana2:"+::QString().number(int(m_joystick_y2*127/100),10)
 //        +";dig1:"+::QString().number(data[0],10)+"}FEDCA987";
-    Data="{data:}";
+    Data="{cmd1:"+QString().number(data[0],10)
+            +";kip1:"+QString().number(m_kcurrent1,'f',0)
+            +";kip2:"+QString().number(m_kcurrent2,'f',0)
+            +";kip3:"+QString().number(m_kcurrent3,'f',0)
+            +";ku12:"+QString().number(m_kvoltage1,'f',0)
+            +";ku13:"+QString().number(m_kvoltage2,'f',0)
+            +";ku23:"+QString().number(m_kvoltage3,'f',0)
+            +";thra:"+QString().number(m_thrcurrent,'f',0)
+            +";thru:"+QString().number(m_thrvoltage,'f',0)
+            +";thrt:"+QString().number(m_thrtemperature,'f',0)
+            +";thrh:"+QString().number(m_thrhumid,'f',0)
+            +";swto:"+QString().number(m_timeout,'f',0)
+            +"}FEDCA987";
 
     qDebug()<<"PS - send data: "<<Data;
 
@@ -271,6 +310,46 @@ void cPSmodel::readData()
         m_good_data=false; good_dataChanged();
         qWarning()<<"PS: wrong data receved";
     }
+}
+
+int cPSmodel::pwrt() const
+{
+    return m_pwrt;
+}
+
+void cPSmodel::setPwrt(int pwrt)
+{
+    m_pwrt = pwrt;
+}
+
+int cPSmodel::pwr3() const
+{
+    return m_pwr3;
+}
+
+void cPSmodel::setPwr3(int pwr3)
+{
+    m_pwr3 = pwr3;
+}
+
+int cPSmodel::pwr2() const
+{
+    return m_pwr2;
+}
+
+void cPSmodel::setPwr2(int pwr2)
+{
+    m_pwr2 = pwr2;
+}
+
+int cPSmodel::pwr1() const
+{
+    return m_pwr1;
+}
+
+void cPSmodel::setPwr1(int pwr1)
+{
+    m_pwr1 = pwr1;
 }
 
 

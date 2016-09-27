@@ -20,6 +20,12 @@ class cPSmodel : public QObject
     Q_PROPERTY(int voltage2 READ voltage2 WRITE setVoltage2 NOTIFY voltage2Changed)
     Q_PROPERTY(int voltage3 READ voltage3 WRITE setVoltage3 NOTIFY voltage3Changed)
 
+    Q_PROPERTY(int pwr1 READ pwr1 WRITE setPwr1 NOTIFY pwr1Changed)
+    Q_PROPERTY(int pwr2 READ pwr2 WRITE setPwr2 NOTIFY pwr2Changed)
+    Q_PROPERTY(int pwr3 READ pwr3 WRITE setPwr3 NOTIFY pwr3Changed)
+    Q_PROPERTY(int pwrt READ pwrt WRITE setPwrt NOTIFY pwrtChanged)
+
+
     Q_PROPERTY(int temperature READ temperature WRITE setTemperature NOTIFY temperatureChanged)
     Q_PROPERTY(int humid READ humid WRITE setHumid NOTIFY humidChanged)
 
@@ -110,6 +116,18 @@ public:
 
     void setGood_data(bool good_data);
 
+    int pwr1() const;
+    void setPwr1(int pwr1);
+
+    int pwr2() const;
+    void setPwr2(int pwr2);
+
+    int pwr3() const;
+    void setPwr3(int pwr3);
+
+    int pwrt() const;
+    void setPwrt(int pwrt);
+
 signals:
     void current1Changed();
     void current2Changed();
@@ -117,6 +135,10 @@ signals:
     void voltage1Changed();
     void voltage2Changed();
     void voltage3Changed();
+    void pwr1Changed();
+    void pwr2Changed();
+    void pwr3Changed();
+    void pwrtChanged();
 
     void temperatureChanged();
     void humidChanged();
@@ -157,8 +179,21 @@ private:
     int m_voltage1=2501;
     int m_voltage2=2502;
     int m_voltage3=2503;
+    int m_pwr1=1;
+    int m_pwr2=2;
+    int m_pwr3=3;
+    int m_pwrt=6;
+
+
+
     int m_temperature=25;
     int m_humid=60;
+
+    int m_thrcurrent=10;
+    int m_thrvoltage=2700;
+    int m_thrtemperature=60;
+    int m_thrhumid=80;
+    int m_timeout=10;
 
     QString m_address="localhost";
     int m_port=1212;
@@ -173,6 +208,12 @@ private:
     bool m_output=false; //false= PSKOV true=TK-15
 
     bool m_good_data=false;
+    double m_kcurrent1=1;
+    double m_kcurrent2=1;
+    double m_kcurrent3=1;
+    double m_kvoltage1=1;
+    double m_kvoltage2=1;
+    double m_kvoltage3=1;
 
 
 
