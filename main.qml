@@ -3,6 +3,7 @@ import QtQuick.Window 2.0
 import Qt.labs.settings 1.0
 import Gyco 1.0
 
+
 Window {
     id: win
     visible: true
@@ -26,6 +27,7 @@ Window {
     PSModel {
         id: ps
     }
+
 
     function fcommand (cmd) {
         console.log ("COMMAND="+cmd)
@@ -98,9 +100,20 @@ Window {
             anchors.left: parent.left; anchors.right: parent.right; anchors.top: lb.bottom
         }
         PriborBoard{
+            id:pb
             height: 140
             anchors.margins: 5
             anchors.left: parent.left; anchors.right: parent.right; anchors.top: bb.bottom
+        }
+        Charts {
+            id: ch
+            height: 500
+            anchors.margins: 5
+            anchors.left: parent.left; anchors.right: parent.right; anchors.top: pb.bottom
+            Timer {
+                    interval: 1000; running: true; repeat: true
+                    onTriggered: ch.addpoint(ps.current1)
+                }
         }
     }
 

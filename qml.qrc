@@ -7,5 +7,6 @@
         <file>ButtonBoard.qml</file>
         <file>Pribor.qml</file>
         <file>PriborBoard.qml</file>
+        <file>Charts.qml</file>
     </qresource>
 </RCC>

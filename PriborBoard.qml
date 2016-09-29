@@ -124,6 +124,72 @@ Item {
               bottomText: "Влажность"
               warningThreshold: 70
           }
+          Rectangle {
+              anchors.verticalCenter: parent.verticalCenter
+              width: 5
+              height: 120
+              color: "gray"
+              border.color: "gray"
+          }
+          Rectangle {
+              anchors.verticalCenter: parent.verticalCenter
+              width: 100
+              height: 120
+              color: "transparent"
+              border.color: "green"
+              Column {
+                  anchors.fill: parent
+                  spacing: 6
+                  anchors.margins: 6
+                  Text {
+                      height: 15
+                      width: parent.width
+                      color: "gray"
+                      font.bold: true
+                      font.pointSize: 15
+                      verticalAlignment: Text.AlignVCenter
+                      horizontalAlignment: Text.AlignHCenter
+                      text: "МОЩН."
+                  }
+                  Text {
+                      height: 15
+                      width: parent.width
+                      color: "magenta"
+                      font.bold: true
+                      font.pointSize: 15
+                      verticalAlignment: Text.AlignVCenter
+                      horizontalAlignment: Text.AlignHCenter
+                      text: "W1:"+ps.pwr1
+                  }
+                  Text {
+                      height: 15
+                      width: parent.width
+                      color: "magenta"
+                      font.pointSize: 15
+                      verticalAlignment: Text.AlignVCenter
+                      horizontalAlignment: Text.AlignHCenter
+                      text: "W2:"+ps.pwr2
+                  }
+                  Text {
+                      height: 15
+                      width: parent.width
+                      color: "magenta"
+                      font.pointSize: 15
+                      verticalAlignment: Text.AlignVCenter
+                      horizontalAlignment: Text.AlignHCenter
+                      text: "W3:"+ps.pwr3
+                  }
+                  Text {
+                      height: 15
+                      width: parent.width
+                      color: "yellow"
+                      font.pointSize: 15
+                      verticalAlignment: Text.AlignVCenter
+                      horizontalAlignment: Text.AlignHCenter
+                      text: "W:"+ps.pwrt
+                  }
+              }
+          }
 
         }
     }

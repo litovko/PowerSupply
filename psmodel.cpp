@@ -172,7 +172,7 @@ void cPSmodel::start_client()
 {
     if (m_client_connected) return;
     bytesWritten = 0;
-    qDebug()<<"PS Start client >>>"<<m_address<<"poprt"<<::QString().number(m_port);
+    qDebug()<<"PS Start client >>>"<<m_address<<"port"<<::QString().number(m_port);
     
     tcpClient.connectToHost(m_address, m_port);
 
@@ -196,6 +196,10 @@ void cPSmodel::clientDisconnected()
     setVoltage3(0);
     setHumid(0);
     setTemperature(0);
+    setPwr1(0);
+    setPwr2(0);
+    setPwr3(0);
+    setPwrt(0);
     setPower380_on(false);
     setPower2500_on(false);
 }
