@@ -270,11 +270,10 @@ void cPSmodel::readData()
     QByteArray Data="";
     QString CRC ="";
     QList<QByteArray> split;
-    int m;
+    int m, relays;
     Data = tcpClient.readAll();
     qDebug()<<"PS read :"<<Data;
-    // {toil=29;poil=70;drpm=15;pwrv=33;pwra=3}FAFBFCFD
-    //m_good_data = false; emit good_dataChanged();
+
     if (Data.startsWith("{")&&(m=Data.indexOf("}"))>0) {
         m_good_data = true; emit good_dataChanged();
         CRC=Data.mid(m+1);
@@ -292,28 +291,59 @@ void cPSmodel::readData()
              val=s.mid(m+1); //данные после ":"
              s=s.left(m); // названия тэга
             qDebug()<<"PS tag:"<<s<<"value:"<<val;
-            if (s=="toil") {
-                m_temperature=val.toInt(&ok,10); emit temperatureChanged();
-                if(!ok) {m_good_data = false; emit good_dataChanged();
-                qWarning()<<"PS no good data for "<<"toil:"<<val;}
+            if (s=="temp") setTemperature(val.toInt(&ok,10));
+            if (s=="humi") setHumid(val.toInt(&ok,10));
+            if (s=="tmrp") setDelay(val.toInt(&ok,10));
+            if (s=="uu12") setVoltage1(val.toInt(&ok,10));
+            if (s=="uu13") setVoltage2(val.toInt(&ok,10));
+            if (s=="uu23") setVoltage3(val.toInt(&ok,10));
+            if (s=="cur1") setCurrent1(val.toInt(&ok,10));
+            if (s=="cur2") setCurrent2(val.toInt(&ok,10));
+            if (s=="cur3") setCurrent3(val.toInt(&ok,10));
+            if (s=="pwr1") setPwr1(val.toInt(&ok,10));
+            if (s=="pwr2") setPwr2(val.toInt(&ok,10));
+            if (s=="pwr3") setPwr3(val.toInt(&ok,10));
+            if (s=="pwrt") setPwrt(val.toInt(&ok,10));
+            if(!ok) {setGood_data(false); qWarning()<<"PS no good data for "<<s<<":"<<val;}
+            if (s=="out1") {
+                relays=val.toInt(&ok,10);
+                if(!ok) {setGood_data(false); qWarning()<<"PS no good data for "<<s<<":"<<val;}
+                else {
+                    setPower2500_on(relays & 0x01);
+                    setOutput(relays & 0x02);
+                    setInput(relays & 0x04);
+                    setPower380_on(relays & 0x08);
+                }
             }
-            if (s=="poil"){
-                m_current1=val.toInt(&ok,10); emit current1Changed();
-                if(!ok) {m_good_data = false; emit good_dataChanged();
-                qWarning()<<"PS no good data for "<<"poil:"<<val;}
-            }
-
-            if (s=="pwrv"){
-                m_voltage1=val.toInt(&ok,10); emit voltage1Changed();
-                if(!ok) {m_good_data = false; emit good_dataChanged();
-                qWarning()<<"PS no good data for "<<"pwrv:"<<val;}
-            }                       
          }
     }
     else {
-        m_good_data=false; good_dataChanged();
+        setGood_data(false);
         qWarning()<<"PS: wrong data receved";
     }
+}
+
+
+int cPSmodel::delay() const
+{
+    return m_delay;
+}
+
+void cPSmodel::setDelay(int delay)
+{
+    m_delay = delay;
+}
+
+
+
+int cPSmodel::timeout() const
+{
+    return m_timeout;
+}
+
+void cPSmodel::setTimeout(int timeout)
+{
+    m_timeout = timeout;
 }
 
 int cPSmodel::pwrt() const

@@ -24,6 +24,7 @@ class cPSmodel : public QObject
     Q_PROPERTY(int pwr2 READ pwr2 WRITE setPwr2 NOTIFY pwr2Changed)
     Q_PROPERTY(int pwr3 READ pwr3 WRITE setPwr3 NOTIFY pwr3Changed)
     Q_PROPERTY(int pwrt READ pwrt WRITE setPwrt NOTIFY pwrtChanged)
+    Q_PROPERTY(int delay READ delay WRITE setDelay NOTIFY delayChanged)
 
 
     Q_PROPERTY(int temperature READ temperature WRITE setTemperature NOTIFY temperatureChanged)
@@ -128,6 +129,12 @@ public:
     int pwrt() const;
     void setPwrt(int pwrt);
 
+    int timeout() const;
+    void setTimeout(int timeout);
+
+    int delay() const;
+    void setDelay(int delay);
+
 signals:
     void current1Changed();
     void current2Changed();
@@ -139,6 +146,7 @@ signals:
     void pwr2Changed();
     void pwr3Changed();
     void pwrtChanged();
+    void delayChanged();
 
     void temperatureChanged();
     void humidChanged();
@@ -183,6 +191,7 @@ private:
     int m_pwr2=2;
     int m_pwr3=3;
     int m_pwrt=6;
+    int m_delay=0;
 
 
 
