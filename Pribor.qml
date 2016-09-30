@@ -16,6 +16,7 @@ Item {
     property real stepSize: 10
     property real minorTickmarks: 1
     property real warningThreshold: 90
+    property int precision: 0
 
 
     CircularGauge {
@@ -90,7 +91,7 @@ Item {
                 }
 
                 Text {
-                    text: value.toString()
+                    text: value.toFixed(precision)
                     //color: "white"
                     color: pr.value >= warningThreshold ? "#e34c22" : "yellow"
                     font.pixelSize: parent.width/6

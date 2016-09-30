@@ -17,7 +17,8 @@ Item {
           Pribor {
               height: 100
               width: 100
-              value: ps.current1
+              value: ps.current1/10
+              precision: 1
               maximumValue: 20
               minorTickmarks: 5
               stepSize: 5
@@ -28,7 +29,8 @@ Item {
           Pribor {
               height: 100
               width: 100
-              value: ps.current2
+              value: ps.current2/10
+              precision: 1
               maximumValue: 20
               minorTickmarks: 5
               stepSize: 5
@@ -39,7 +41,8 @@ Item {
           Pribor {
               height: 100
               width: 100
-              value: ps.current3
+              value: ps.current3/10
+              precision: 1
               maximumValue: 20
               minorTickmarks: 5
               stepSize: 5
