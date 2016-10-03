@@ -24,7 +24,7 @@ Item {
             height: 60
             width:  60
             bottomText: "ДАННЫЕ"
-            active: ps
+            active: ps.good_data
           }
           Rectangle {
               anchors.verticalCenter: parent.verticalCenter
