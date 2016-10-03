@@ -162,7 +162,7 @@ Item {
                       font.pointSize: 15
                       verticalAlignment: Text.AlignVCenter
                       horizontalAlignment: Text.AlignHCenter
-                      text: "W1:"+ps.pwr1
+                      text: "P1:"+ps.pwr1
                   }
                   Text {
                       height: 15
@@ -171,7 +171,7 @@ Item {
                       font.pointSize: 15
                       verticalAlignment: Text.AlignVCenter
                       horizontalAlignment: Text.AlignHCenter
-                      text: "W2:"+ps.pwr2
+                      text: "P2:"+ps.pwr2
                   }
                   Text {
                       height: 15
@@ -180,7 +180,7 @@ Item {
                       font.pointSize: 15
                       verticalAlignment: Text.AlignVCenter
                       horizontalAlignment: Text.AlignHCenter
-                      text: "W3:"+ps.pwr3
+                      text: "P3:"+ps.pwr3
                   }
                   Text {
                       height: 15
@@ -189,7 +189,7 @@ Item {
                       font.pointSize: 15
                       verticalAlignment: Text.AlignVCenter
                       horizontalAlignment: Text.AlignHCenter
-                      text: "W:"+ps.pwrt
+                      text: "P:"+ps.pwrt
                   }
               }
           }
