@@ -105,16 +105,42 @@ Window {
             anchors.margins: 5
             anchors.left: parent.left; anchors.right: parent.right; anchors.top: bb.bottom
         }
-        Charts {
-            id: ch
-            height: 500
-            anchors.margins: 5
-            anchors.left: parent.left; anchors.right: parent.right; anchors.top: pb.bottom
-            Timer {
-                    interval: 1000; running: true; repeat: true
-                    onTriggered: ch.addpoint(ps.current1)
+        Timer {
+                interval: 500; running: true; repeat: true
+                onTriggered: {
+                    ch1.addpoint(ps.current1/10);
+                    ch2.addpoint(ps.current2/10);
+                    ch3.addpoint(ps.current3/10);
                 }
+            }
+        Row {
+            anchors.margins: 5
+            anchors.top: pb.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
+            spacing: 5
+            MyCharts {
+                id: ch1
+                height: 300
+                width: 400
+                seriesName: "Сила тока"
+                chartName: "Фаза 1"
+            }
+            MyCharts {
+                id: ch2
+                height: 300
+                width: 400
+                seriesName: "Сила тока"
+                chartName: "Фаза 2"
+            }
+            MyCharts {
+                id: ch3
+                height: 300
+                width: 400
+                seriesName: "Сила тока"
+                chartName: "Фаза 3"
+            }
         }
+
     }
 
 }

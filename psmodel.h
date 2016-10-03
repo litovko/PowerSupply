@@ -135,6 +135,9 @@ public:
     int delay() const;
     void setDelay(int delay);
 
+    unsigned int packetid() const;
+    void setPacketid(unsigned int packetid);
+
 signals:
     void current1Changed();
     void current2Changed();
@@ -181,9 +184,9 @@ public slots:
     void readData(); //расклаываем полученные от сервера данные по параметрам
 private:
 
-    int m_current1=1;
-    int m_current2=2;
-    int m_current3=3;
+    int m_current1=60;
+    int m_current2=100;
+    int m_current3=80;
     int m_voltage1=2501;
     int m_voltage2=2502;
     int m_voltage3=2503;
@@ -203,6 +206,7 @@ private:
     int m_thrtemperature=60;
     int m_thrhumid=80;
     int m_timeout=10;
+    unsigned int m_packetid=0;
 
     QString m_address="localhost";
     int m_port=1212;

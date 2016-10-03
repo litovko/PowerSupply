@@ -202,6 +202,7 @@ void cPSmodel::clientDisconnected()
     setPwrt(0);
     setPower380_on(false);
     setPower2500_on(false);
+    setPacketid(0);
 }
 
 
@@ -254,6 +255,7 @@ void cPSmodel::sendData()
             +";thrt:"+QString().number(m_thrtemperature,'f',0)
             +";thrh:"+QString().number(m_thrhumid,'f',0)
             +";swto:"+QString().number(m_timeout,'f',0)
+            +";pids:"+QString().number(m_packetid)
             +"}FEDCA987";
 
     qDebug()<<"PS - send data: "<<Data;
@@ -275,7 +277,8 @@ void cPSmodel::readData()
     qDebug()<<"PS read :"<<Data;
 
     if (Data.startsWith("{")&&(m=Data.indexOf("}"))>0) {
-        m_good_data = true; emit good_dataChanged();
+        setGood_data(true);
+
         CRC=Data.mid(m+1);
         //qDebug()<<"CRC:"<<CRC; //CRC пока не проверяем - это отдельная тема.
         Data=Data.mid(1,m-1);
@@ -304,6 +307,10 @@ void cPSmodel::readData()
             if (s=="pwr2") setPwr2(val.toInt(&ok,10));
             if (s=="pwr3") setPwr3(val.toInt(&ok,10));
             if (s=="pwrt") setPwrt(val.toInt(&ok,10));
+            unsigned int pids;
+            if (s=="pids") pids=(val.toInt(&ok,10));
+            if (pids==packetid()) m_packetid=m_packetid+1;
+                             else setGood_data(false);
             if(!ok) {setGood_data(false); qWarning()<<"PS no good data for "<<s<<":"<<val;}
             if (s=="out1") {
                 relays=val.toInt(&ok,10);
@@ -321,6 +328,16 @@ void cPSmodel::readData()
         setGood_data(false);
         qWarning()<<"PS: wrong data receved";
     }
+}
+
+unsigned int cPSmodel::packetid() const
+{
+    return m_packetid;
+}
+
+void cPSmodel::setPacketid(unsigned int packetid)
+{
+    m_packetid = packetid;
 }
 
 
