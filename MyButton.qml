@@ -48,8 +48,8 @@ Item {
             hoverEnabled: true
             acceptedButtons: Qt.LeftButton
             //propagateComposedEvents: true
-            onPressed: {mybutton.pressed=true;console.log("Button was pressed")}
-            onReleased: {mybutton.pressed=false; mybutton.mybuttonPressed();console.log("Button was released")}
+            onPressed: {mybutton.pressed=true;}
+            onReleased: {mybutton.pressed=false; mybutton.mybuttonPressed();}
         }
     }
 

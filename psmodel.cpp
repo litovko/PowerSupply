@@ -15,11 +15,10 @@ cPSmodel::cPSmodel(QObject *parent) : QObject(parent)
 
     connect(&tcpClient, SIGNAL(connected()),this, SLOT(sendData())); //при установке исходящего соединения с аппаратом посылаем текущие данные.  !!! litovko
     //при изменении пользователем любого параметра сразу передаем данные
-//    connect(this, SIGNAL(lampChanged()),this, SLOT(sendData()));
-//    connect(this, SIGNAL(engineChanged()),this, SLOT(sendData()));
-//    connect(this, SIGNAL(pumpChanged()),this, SLOT(sendData()));
-    //connect(this, SIGNAL(joystickChanged()),this, SLOT(sendData()));
-//    connect(this, SIGNAL(powerChanged()),this, SLOT(sendData()));
+    connect(this, SIGNAL(power380_onChanged()),this, SLOT(changeState()));
+    connect(this, SIGNAL(power2500_onChanged()),this, SLOT(changeState()));
+    connect(this, SIGNAL(inputChanged()),this, SLOT(changeState()));
+    connect(this, SIGNAL(outputChanged()),this, SLOT(changeState()));
 
     connect(&timer_connect, SIGNAL(timeout()), this, SLOT(start_client()));
     timer_connect.start(m_timer_connect_interval);
@@ -75,6 +74,12 @@ void cPSmodel::readSettings()
 
 
 
+}
+
+void cPSmodel::changeState()
+{
+    m_packetid=m_packetid+1;
+    sendData();
 }
 
 void cPSmodel::updateSendTimer()
@@ -287,13 +292,19 @@ void cPSmodel::readData()
         //qDebug()<<"split:"<<split;
         QListIterator<QByteArray> i(split);
         QByteArray s, val;
-        bool ok=false;
+        bool ok=false;        
+        unsigned int pids=0;
         while (i.hasNext()){
              s=i.next();
              m=s.indexOf(":");
              val=s.mid(m+1); //данные после ":"
              s=s.left(m); // названия тэга
             qDebug()<<"PS tag:"<<s<<"value:"<<val;
+
+            if (s=="pids") pids=(val.toInt(&ok,10));
+            if (pids==packetid()) { m_packetid+=1; qDebug()<<"ids are the same new ID="<<m_packetid;}
+                             else { setGood_data(false); qDebug()<<"ids are not the same => recieved.id:"<< pids<<"sent.id"<< packetid();}
+            if (s=="type") ok=(val=="pctrl");
             if (s=="temp") setTemperature(val.toInt(&ok,10));
             if (s=="humi") setHumid(val.toInt(&ok,10));
             if (s=="tmrp") setDelay(val.toInt(&ok,10));
@@ -307,21 +318,16 @@ void cPSmodel::readData()
             if (s=="pwr2") setPwr2(val.toInt(&ok,10));
             if (s=="pwr3") setPwr3(val.toInt(&ok,10));
             if (s=="pwrt") setPwrt(val.toInt(&ok,10));
-            unsigned int pids;
-            if (s=="pids") pids=(val.toInt(&ok,10));
-            if (pids==packetid()) m_packetid=m_packetid+1;
-                             else setGood_data(false);
-            if(!ok) {setGood_data(false); qWarning()<<"PS no good data for "<<s<<":"<<val;}
             if (s=="out1") {
                 relays=val.toInt(&ok,10);
-                if(!ok) {setGood_data(false); qWarning()<<"PS no good data for "<<s<<":"<<val;}
-                else {
+                if(ok) {
                     setPower2500_on(relays & 0x01);
                     setOutput(relays & 0x02);
                     setInput(relays & 0x04);
                     setPower380_on(relays & 0x08);
                 }
             }
+            if(!ok) {setGood_data(false); qWarning()<<"PS no good data for "<<s<<":"<<val;}
          }
     }
     else {
@@ -371,6 +377,7 @@ int cPSmodel::pwrt() const
 void cPSmodel::setPwrt(int pwrt)
 {
     m_pwrt = pwrt;
+    emit pwrtChanged();
 }
 
 int cPSmodel::pwr3() const
@@ -381,6 +388,7 @@ int cPSmodel::pwr3() const
 void cPSmodel::setPwr3(int pwr3)
 {
     m_pwr3 = pwr3;
+    emit pwr3Changed();
 }
 
 int cPSmodel::pwr2() const
@@ -391,6 +399,7 @@ int cPSmodel::pwr2() const
 void cPSmodel::setPwr2(int pwr2)
 {
     m_pwr2 = pwr2;
+    emit pwr2Changed();
 }
 
 int cPSmodel::pwr1() const
@@ -401,6 +410,7 @@ int cPSmodel::pwr1() const
 void cPSmodel::setPwr1(int pwr1)
 {
     m_pwr1 = pwr1;
+    emit pwr1Changed();
 }
 
 

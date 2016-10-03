@@ -78,8 +78,8 @@ public:
     bool good_data()const;
 
 
-    bool check_type() const;
-    void setCheck_type(bool check_type);
+//    bool check_type() const;
+//    void setCheck_type(bool check_type);
 
     int voltage1() const;
     void setVoltage1(int voltage1);
@@ -178,6 +178,7 @@ public slots:
     void updateSendTimer();
     void saveSettings();
     void readSettings();
+    void changeState();
     void updateClientProgress(qint64 numBytes);
     void displayError(QAbstractSocket::SocketError socketError);
     void sendData(); //слот должен вызываться любым событием, которое меняет данные, предназначенные для отправки.

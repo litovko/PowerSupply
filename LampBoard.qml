@@ -20,6 +20,12 @@ Item {
             bottomText: "СВЯЗЬ"
             active: ps.client_connected
           }
+          MyLamp {
+            height: 60
+            width:  60
+            bottomText: "ДАННЫЕ"
+            active: ps
+          }
           Rectangle {
               anchors.verticalCenter: parent.verticalCenter
               width: 5

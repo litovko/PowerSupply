@@ -36,19 +36,15 @@ Window {
               Qt.quit();
               break;
           case "POWER ON":
-              console.log("TO POWER ON")
               ps.power380_on=true
               break;
           case "POWER OFF":
-              console.log("TO POWER OFF")
               ps.power380_on=false
               break;
           case "HION":
-              console.log("TO POWER ON")
               ps.power2500_on=true
               break;
           case "HIOFF":
-              console.log("TO POWER OFF")
               ps.power2500_on=false
               break;
           case "INP1":
