@@ -299,11 +299,19 @@ void cPSmodel::readData()
              m=s.indexOf(":");
              val=s.mid(m+1); //данные после ":"
              s=s.left(m); // названия тэга
-            qDebug()<<"PS tag:"<<s<<"value:"<<val;
+            qDebug()<<"PS V2 tag:"<<s<<"value:"<<val;
 
-            if (s=="pids") pids=(val.toInt(&ok,10));
-            if (pids==packetid()) { m_packetid+=1; qDebug()<<"ids are the same new ID="<<m_packetid;}
-                             else { setGood_data(false); qDebug()<<"ids are not the same => recieved.id:"<< pids<<"sent.id"<< packetid();}
+            if (s=="pids") {
+                pids=val.toInt(&ok,10);
+                if (pids==packetid()) {
+                       m_packetid+=1;
+                       qDebug()<<"ids are the same new ID="<<m_packetid;}
+                else {
+                       setGood_data(false);
+                       qDebug()<<"ids are not the same => recieved.id:"<< pids<<"sent.id"<< packetid();
+                       return;
+                     }
+                        }
             if (s=="type") ok=(val=="pctrl");
             if (s=="temp") setTemperature(val.toInt(&ok,10));
             if (s=="humi") setHumid(val.toInt(&ok,10));
