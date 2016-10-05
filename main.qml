@@ -14,7 +14,7 @@ Window {
     //color: "transparent"
     MouseArea {
         anchors.fill: parent
-        onClicked: {
+        onDoubleClicked:  {
             win.fcommand("FULLSCREEN")
         }
     }

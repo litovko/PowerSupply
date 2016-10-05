@@ -14,6 +14,15 @@ Item {
           anchors.centerIn:  parent
           anchors.margins:  10
           spacing: 20
+
+          Text {
+              width: 50
+              height: 50
+              color: "#c1d177"
+              text: "d="+ps.delay
+              verticalAlignment: Text.AlignVCenter
+              font.pointSize: 12
+          }
           MyButton {
             anchors.verticalCenter: parent.verticalCenter
             onMybuttonPressed: fcommand("POWER ON")
