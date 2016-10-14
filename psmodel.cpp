@@ -311,7 +311,7 @@ void cPSmodel::readData()
                        qDebug()<<"ids are not the same => recieved.id:"<< pids<<"sent.id"<< packetid();
                        return;
                      }
-                        }
+            }
             if (s=="type") ok=(val=="pctrl");
             if (s=="temp") setTemperature(val.toInt(&ok,10));
             if (s=="humi") setHumid(val.toInt(&ok,10));
@@ -363,6 +363,7 @@ int cPSmodel::delay() const
 void cPSmodel::setDelay(int delay)
 {
     m_delay = delay;
+    emit delayChanged();
 }
 
 
