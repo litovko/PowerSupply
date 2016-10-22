@@ -18,3 +18,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     psmodel.h
+
+RC_ICONS = ps.ico
+
+DISTFILES += \
+    ps.ico

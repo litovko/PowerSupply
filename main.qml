@@ -7,7 +7,7 @@ import Gyco 1.0
 Window {
     id: win
     visible: true
-    title: "HYCO ТК-15 Телеметрия"
+    title: "HYCO ИСТОЧНИК ПИТАНИЯ"
     color: "black"
     height: 700
     width: 800
