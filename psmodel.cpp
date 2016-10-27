@@ -43,6 +43,7 @@ void cPSmodel::saveSettings()
 
     settings.setValue("THRcurrent",m_thrcurrent);
     settings.setValue("THRvoltage",m_thrvoltage);
+    settings.setValue("THRminvoltage",m_minvoltage);
     settings.setValue("THRtemperature",m_thrtemperature);
     settings.setValue("THRhumidity",m_thrhumid);
     settings.setValue("PStimeout",m_timeout);
@@ -68,6 +69,7 @@ void cPSmodel::readSettings()
 
     m_thrcurrent=settings.value("THRcurrent","10").toInt();
     m_thrvoltage=settings.value("THRvoltage","2700").toInt();
+    m_minvoltage=settings.value("THRminvoltage","2300").toInt();
     m_thrtemperature=settings.value("THRtemperature","60").toInt();
     m_thrhumid=settings.value("THRhumidity","80").toInt();
     m_timeout=settings.value("PStimeout","10").toInt();
@@ -257,6 +259,7 @@ void cPSmodel::sendData()
             +";ku23:"+QString().number(m_kvoltage3,'f',0)
             +";thra:"+QString().number(m_thrcurrent,'f',0)
             +";thru:"+QString().number(m_thrvoltage,'f',0)
+            +";thrs:"+QString().number(m_minvoltage,'f',0)
             +";thrt:"+QString().number(m_thrtemperature,'f',0)
             +";thrh:"+QString().number(m_thrhumid,'f',0)
             +";swto:"+QString().number(m_timeout,'f',0)
@@ -305,6 +308,7 @@ void cPSmodel::readData()
                 pids=val.toInt(&ok,10);
                 if (pids==packetid()) {
                        m_packetid+=1;
+                       ok=true;
                        qDebug()<<"ids are the same new ID="<<m_packetid;}
                 else {
                        setGood_data(false);
@@ -326,8 +330,9 @@ void cPSmodel::readData()
             if (s=="pwr2") setPwr2(val.toInt(&ok,10));
             if (s=="pwr3") setPwr3(val.toInt(&ok,10));
             if (s=="pwrt") setPwrt(val.toInt(&ok,10));
+            if (s=="errc") setError(val.toInt(&ok,10));
             if (s=="out1") {
-                relays=val.toInt(&ok,10);
+                relays=val.toInt(&ok,10);  // состояние релюх
                 if(ok) {
                     setPower2500_on(relays & 0x01);
                     setOutput(relays & 0x02);
@@ -342,6 +347,17 @@ void cPSmodel::readData()
         setGood_data(false);
         qWarning()<<"PS: wrong data receved";
     }
+}
+
+int cPSmodel::error() const
+{
+    return m_error;
+}
+
+void cPSmodel::setError(int error)
+{
+    m_error = error;
+    emit errorChanged();
 }
 
 unsigned int cPSmodel::packetid() const

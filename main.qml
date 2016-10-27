@@ -109,9 +109,54 @@ Window {
                     ch3.addpoint(ps.current3/10);
                 }
             }
+        Rectangle{
+            id:st
+            height: 40
+            color: "transparent"
+            border.color: "darkgray"
+            radius: 15
+            border.width: 2
+            anchors.margins: 5
+            anchors.left: parent.left; anchors.right: parent.right; anchors.top: pb.bottom
+
+            Text {
+                id: err
+                color: "yellow"
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.top: parent.top
+                anchors.margins: 5
+                text: ps.error
+                font.pointSize: 10
+                onTextChanged: {
+                    /*
+                    Состояние ошибок контроллера
+                    1 Отключение питания по превышению тока любой из фаз
+                    2 Отключение питания по превышению напряжения любой из фаз
+                    3 Отключение питания по падению напряжения любой из фаз
+                    4 Отключение питания по превышению температуры
+                    5 Отключение питания по превышению влажности
+                    */
+                    errtext.text=""
+                    if (ps.error&1) errtext.text+="<Превышен ток>"
+                    if (ps.error&2) errtext.text+="<Превышено напряжение>"
+                    if (ps.error&4) errtext.text+="<!!!Изоляция!!!>"
+                    if (ps.error&4) errtext.text+="<Первышение температуры>"
+                    if (ps.error&4) errtext.text+="<Первышение влажности>"
+
+                }
+            }
+            Text {
+                id: errtext
+                color: "yellow"
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.bottom:  parent.bottom
+                anchors.margins: 5
+                font.pointSize: 10
+            }
+        }
         Row {
             anchors.margins: 5
-            anchors.top: pb.bottom
+            anchors.top: st.bottom
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 5
             MyCharts {

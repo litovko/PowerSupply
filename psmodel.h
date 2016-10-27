@@ -25,6 +25,7 @@ class cPSmodel : public QObject
     Q_PROPERTY(int pwr3 READ pwr3 WRITE setPwr3 NOTIFY pwr3Changed)
     Q_PROPERTY(int pwrt READ pwrt WRITE setPwrt NOTIFY pwrtChanged)
     Q_PROPERTY(int delay READ delay WRITE setDelay NOTIFY delayChanged)
+    Q_PROPERTY(int error READ error WRITE setError NOTIFY errorChanged)
 
 
     Q_PROPERTY(int temperature READ temperature WRITE setTemperature NOTIFY temperatureChanged)
@@ -138,6 +139,9 @@ public:
     unsigned int packetid() const;
     void setPacketid(unsigned int packetid);
 
+    int error() const;
+    void setError(int error);
+
 signals:
     void current1Changed();
     void current2Changed();
@@ -150,6 +154,8 @@ signals:
     void pwr3Changed();
     void pwrtChanged();
     void delayChanged();
+
+    void errorChanged();
 
     void temperatureChanged();
     void humidChanged();
@@ -197,14 +203,17 @@ private:
     int m_pwrt=6;
     int m_delay=0;
 
+    int m_error=0;
+
 
 
     int m_temperature=25;
     int m_humid=60;
 
     int m_thrcurrent=10;
-    int m_thrvoltage=2700;
-    int m_thrtemperature=60;
+    int m_thrvoltage=2700; //максимальное напряжение на фазе
+    int m_minvoltage=2300; //минимальное напряжение на фазе
+    int m_thrtemperature=50;
     int m_thrhumid=80;
     int m_timeout=10;
     unsigned int m_packetid=0;
