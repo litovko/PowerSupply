@@ -80,8 +80,8 @@ void cPSmodel::readSettings()
 
 void cPSmodel::changeState()
 {
-    m_packetid=m_packetid+1;
-    sendData();
+    //m_packetid=m_packetid+1;
+    //sendData();
 }
 
 void cPSmodel::updateSendTimer()
@@ -239,7 +239,7 @@ void cPSmodel::displayError(QAbstractSocket::SocketError socketError)
 
 void cPSmodel::sendData()
 {
-    char data[5]={0,32,33,34,35};
+    char data[5]={0,0,0,0,0};
     data[0] = m_power2500_on*1
             +   m_power380_on*2
             +   m_input*4
@@ -250,6 +250,7 @@ void cPSmodel::sendData()
 //    Data="{ana1:"+::QString().number(int(m_joystick_y1*127/100),10)
 //        +";ana2:"+::QString().number(int(m_joystick_y2*127/100),10)
 //        +";dig1:"+::QString().number(data[0],10)+"}FEDCA987";
+    m_packetid+=1;
     Data="{cmd1:"+QString().number(data[0],10)
             +";kip1:"+QString().number(m_kcurrent1,'f',0)
             +";kip2:"+QString().number(m_kcurrent2,'f',0)
@@ -302,7 +303,7 @@ void cPSmodel::readData()
              m=s.indexOf(":");
              val=s.mid(m+1); //данные после ":"
              s=s.left(m); // названия тэга
-            qDebug()<<"PS V2 tag:"<<s<<"value:"<<val;
+            qDebug()<<"PS-tag:"<<s<<"value:"<<val;
 
             if (s=="pids") {
                 pids=val.toInt(&ok,10);
