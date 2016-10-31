@@ -13,7 +13,7 @@ cPSmodel::cPSmodel(QObject *parent) : QObject(parent)
     connect(&tcpClient, SIGNAL(readyRead()),this, SLOT(readData()));
     connect(&tcpClient, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(displayError(QAbstractSocket::SocketError)));
 
-    connect(&tcpClient, SIGNAL(connected()),this, SLOT(sendData())); //при установке исходящего соединения с аппаратом посылаем текущие данные.  !!! litovko
+    //connect(&tcpClient, SIGNAL(connected()),this, SLOT(sendData())); //при установке исходящего соединения с аппаратом посылаем текущие данные.  !!! litovko
     //при изменении пользователем любого параметра сразу передаем данные
     connect(this, SIGNAL(power380_onChanged()),this, SLOT(changeState()));
     connect(this, SIGNAL(power2500_onChanged()),this, SLOT(changeState()));
@@ -80,7 +80,7 @@ void cPSmodel::readSettings()
 
 void cPSmodel::changeState()
 {
-    //m_packetid=m_packetid+1;
+    m_packetid+=1; //меняем ID, чтобы пришедшие данные с текущим ИД программа уже не воспринимала.
     //sendData();
 }
 
@@ -308,7 +308,7 @@ void cPSmodel::readData()
             if (s=="pids") {
                 pids=val.toInt(&ok,10);
                 if (pids==packetid()) {
-                       m_packetid+=1;
+                       //m_packetid+=1;
                        ok=true;
                        qDebug()<<"ids are the same new ID="<<m_packetid;}
                 else {

@@ -126,7 +126,7 @@ Window {
                 anchors.top: parent.top
                 anchors.margins: 5
                 text: ps.error
-                font.pointSize: 10
+                font.pointSize: 8
                 onTextChanged: {
                     /*
                     Состояние ошибок контроллера
@@ -147,11 +147,12 @@ Window {
             }
             Text {
                 id: errtext
-                color: "yellow"
+                color: "red"
+                font.bold: true
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.bottom:  parent.bottom
                 anchors.margins: 5
-                font.pointSize: 10
+                font.pointSize: 14
             }
         }
         Row {
