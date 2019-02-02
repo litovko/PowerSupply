@@ -1,11 +1,12 @@
 import QtQuick 2.0
-import QtCharts 2.0
+import QtCharts 2.2
+
 
 Item {
     id: chart
     property int maxX: 120
     property int minХ: 0
-    property int maxY: 20
+    property int maxY: 40
 
     property int minY: 0
 

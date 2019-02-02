@@ -62,34 +62,34 @@ Item {
               height: 100
               width: 100
               value: ps.voltage1
-              maximumValue: 4000
+              maximumValue: 2000
               minorTickmarks: 4
-              stepSize: 1000
+              stepSize: 500
               centerТext: "V"
               bottomText: "Напряжение1"
-              warningThreshold: 2500
+              warningThreshold: 1600
           }
           Pribor {
               height: 100
               width: 100
               value: ps.voltage2
-              maximumValue: 4000
+              maximumValue: 2000
               minorTickmarks: 4
-              stepSize: 1000
+              stepSize: 500
               centerТext: "V"
               bottomText: "Напряжение2"
-              warningThreshold: 2500
+              warningThreshold: 1600
           }
           Pribor {
               height: 100
               width: 100
               value: ps.voltage3
-              maximumValue: 4000
+              maximumValue: 2000
               minorTickmarks: 4
-              stepSize: 1000
+              stepSize: 500
               centerТext: "V"
               bottomText: "Напряжение3"
-              warningThreshold: 2500
+              warningThreshold: 1600
           }
           Rectangle {
               anchors.verticalCenter: parent.verticalCenter

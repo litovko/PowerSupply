@@ -58,6 +58,7 @@ Item {
               bottomText: "ВХОД ROV"
               height: 60
               width: 60
+              visible: false
               active: !ps.input
 
           }
@@ -66,6 +67,7 @@ Item {
               bottomText: "ВХОД ГИКО"
               height: 60
               width: 60
+              visible: false
               active: ps.input
 
           }
@@ -73,6 +75,7 @@ Item {
               anchors.verticalCenter: parent.verticalCenter
               width: 5
               height: 50
+              visible: false
               color: "gray"
               border.color: "gray"
           }
@@ -81,12 +84,14 @@ Item {
               height: 60
               width: 60
               active: !ps.output
+              visible: false
               //fontSize: 12
           }
           MyLamp {
               bottomText: "ВЫХОД ТК-15"
               height: 60
               width: 60
+              visible: false
               active: ps.output
 
           }
@@ -94,18 +99,19 @@ Item {
               anchors.verticalCenter: parent.verticalCenter
               width: 5
               height: 50
+              visible: false
               color: "gray"
               border.color: "gray"
           }
           MyLamp {
-              bottomText: "2500 ВКЛ"
+              bottomText: "1500 ВКЛ"
               height: 60
               width: 60
               active: ps.power2500_on
               //fontSize: 12
           }
           MyLamp {
-              bottomText: "2500 ВЫКЛ"
+              bottomText: "1500 ВЫКЛ"
               height: 60
               width: 60
               active: !ps.power2500_on

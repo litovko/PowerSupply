@@ -31,7 +31,7 @@ extern void toggle_log(bool recordlog) {
         return;
     }
     if (!logfile.isOpen()) {
-        logfile.setFileName("hyco_log_"+QDateTime::currentDateTime().toString("dd-MM-yyyy_hh-mm-ss-zzz.log"));
+        logfile.setFileName("hyco_ps_log_"+QDateTime::currentDateTime().toString("dd-MM-yyyy_hh-mm-ss-zzz.log"));
         logfile.open(QIODevice::WriteOnly | QIODevice::Text);
         logfile.write("Open\n");
     }
@@ -82,7 +82,9 @@ int main(int argc, char *argv[])
     app.setApplicationName(giko_program);
 
     QQmlApplicationEngine engine;
-    engine.addImportPath(QStringLiteral("qml"));
+
+    //engine.addImportPath(QStringLiteral("qml"));
+    qDebug()<<"importPathList:"<<engine.importPathList();
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     qDebug()<<"Engine loaded"<<giko_name<<"  "<<giko_program;
 

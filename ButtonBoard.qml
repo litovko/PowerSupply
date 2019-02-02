@@ -41,6 +41,7 @@ Item {
               anchors.verticalCenter: parent.verticalCenter
               width: 5
               height: 50
+              visible: false
               color: "gray"
               border.color: "gray"
           }
@@ -48,6 +49,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             width: 100
             height: 50
+            visible: false
             onMybuttonPressed: fcommand("INP1")
             text: "ВХОД ROV"
           }
@@ -55,6 +57,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             width: 100
             height: 50
+            visible: false
             onMybuttonPressed: fcommand("INP2")
             text: "ВХОД ГИКО"
           }
@@ -62,6 +65,7 @@ Item {
               anchors.verticalCenter: parent.verticalCenter
               width: 5
               height: 50
+              visible: false
               color: "gray"
               border.color: "gray"
           }
@@ -69,6 +73,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             width: 100
             height: 50
+            visible: false
             onMybuttonPressed: fcommand("OUT1")
             text: "ВЫХ. ПСКОВ"
           }
@@ -76,6 +81,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             width: 100
             height: 50
+            visible: false
             onMybuttonPressed: fcommand("OUT2")
             text: "ВЫХ. ТК-15"
           }
@@ -91,14 +97,14 @@ Item {
             width: 100
             height: 50
             onMybuttonPressed: fcommand("HION")
-            text: "2500 ВКЛ"
+            text: "1500 ВКЛ"
           }
           MyButton {
             anchors.verticalCenter: parent.verticalCenter
             width: 100
             height: 50
             onMybuttonPressed: fcommand("HIOFF")
-            text: "2500 ВЫКЛ"
+            text: "1500 ВЫКЛ"
           }
 
 
