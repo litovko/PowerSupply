@@ -23,3 +23,4 @@ RC_ICONS = ps.ico
 
 DISTFILES += \
     ps.ico
+DISTFILES = D:\dest.rig.5.11
