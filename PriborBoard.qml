@@ -134,6 +134,35 @@ Item {
               color: "gray"
               border.color: "gray"
           }
+          Pribor {
+              height: 100
+              width: 100
+              value: ps.current4
+              maximumValue: 100
+              minorTickmarks: 4
+              stepSize: 20
+              centerТext: "A"
+              bottomText: "Утечка 1"
+              warningThreshold: 90
+          }
+          Pribor {
+              height: 100
+              width: 100
+              value: ps.voltage3
+              maximumValue: 100
+              minorTickmarks: 4
+              stepSize: 20
+              centerТext: "V"
+              bottomText: "Утечка 2"
+              warningThreshold: 1600
+          }
+          Rectangle {
+              anchors.verticalCenter: parent.verticalCenter
+              width: 5
+              height: 120
+              color: "gray"
+              border.color: "gray"
+          }
           Rectangle {
               anchors.verticalCenter: parent.verticalCenter
               width: 100

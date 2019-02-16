@@ -15,10 +15,12 @@ class cPSmodel : public QObject
     Q_PROPERTY(int current1 READ current1 WRITE setCurrent1 NOTIFY current1Changed)
     Q_PROPERTY(int current2 READ current2 WRITE setCurrent2 NOTIFY current2Changed)
     Q_PROPERTY(int current3 READ current3 WRITE setCurrent3 NOTIFY current3Changed)
+    Q_PROPERTY(int current4 READ current4 WRITE setCurrent4 NOTIFY current4Changed)
 
     Q_PROPERTY(int voltage1 READ voltage1 WRITE setVoltage1 NOTIFY voltage1Changed)
     Q_PROPERTY(int voltage2 READ voltage2 WRITE setVoltage2 NOTIFY voltage2Changed)
     Q_PROPERTY(int voltage3 READ voltage3 WRITE setVoltage3 NOTIFY voltage3Changed)
+    Q_PROPERTY(int voltage4 READ voltage4 WRITE setVoltage4 NOTIFY voltage4Changed)
 
     Q_PROPERTY(int pwr1 READ pwr1 WRITE setPwr1 NOTIFY pwr1Changed)
     Q_PROPERTY(int pwr2 READ pwr2 WRITE setPwr2 NOTIFY pwr2Changed)
@@ -142,13 +144,21 @@ public:
     int error() const;
     void setError(int error);
 
+    int current4() const;
+    void setCurrent4(int current4);
+
+    int voltage4() const;
+    void setVoltage4(int voltage4);
+
 signals:
     void current1Changed();
     void current2Changed();
     void current3Changed();
+    void current4Changed();
     void voltage1Changed();
     void voltage2Changed();
     void voltage3Changed();
+    void voltage4Changed();
     void pwr1Changed();
     void pwr2Changed();
     void pwr3Changed();
@@ -194,9 +204,11 @@ private:
     int m_current1=0;
     int m_current2=0;
     int m_current3=0;
+    int m_current4=0;
     int m_voltage1=0;
     int m_voltage2=0;
     int m_voltage3=0;
+    int m_voltage4=0;
     int m_pwr1=0;
     int m_pwr2=0;
     int m_pwr3=0;

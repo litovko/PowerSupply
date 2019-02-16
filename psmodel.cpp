@@ -324,9 +324,11 @@ void cPSmodel::readData()
             if (s=="uu12") setVoltage1(val.toInt(&ok,10));
             if (s=="uu13") setVoltage2(val.toInt(&ok,10));
             if (s=="uu23") setVoltage3(val.toInt(&ok,10));
+            if (s=="uuz")  setVoltage4(val.toInt(&ok,10));
             if (s=="cur1") setCurrent1(val.toInt(&ok,10));
             if (s=="cur2") setCurrent2(val.toInt(&ok,10));
             if (s=="cur3") setCurrent3(val.toInt(&ok,10));
+            if (s=="сurz") setCurrent4(val.toInt(&ok,10));
             if (s=="pwr1") setPwr1(val.toInt(&ok,10));
             if (s=="pwr2") setPwr2(val.toInt(&ok,10));
             if (s=="pwr3") setPwr3(val.toInt(&ok,10));
@@ -348,6 +350,26 @@ void cPSmodel::readData()
         setGood_data(false);
         qWarning()<<"PS: wrong data receved";
     }
+}
+
+int cPSmodel::voltage4() const
+{
+    return m_voltage4;
+}
+
+void cPSmodel::setVoltage4(int voltage4)
+{
+    m_voltage4 = voltage4;
+}
+
+int cPSmodel::current4() const
+{
+    return m_current4;
+}
+
+void cPSmodel::setCurrent4(int current4)
+{
+    m_current4 = current4;
 }
 
 int cPSmodel::error() const
