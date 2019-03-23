@@ -242,8 +242,8 @@ void cPSmodel::sendData()
     char data[5]={0,0,0,0,0};
     data[0] = m_power2500_on*1
             +   m_power380_on*2
-            +   m_input*4
-            + m_output*8;
+            +   m_input*4;
+            //+ m_output*8;
     QString Data; // Строка отправки данных.
 // проверяем, есть ли подключение клиента. Если подключения нет, то ничего не отправляем.
     if (!m_client_connected) return;
