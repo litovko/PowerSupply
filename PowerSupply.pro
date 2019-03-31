@@ -23,4 +23,5 @@ RC_ICONS = ps.ico
 
 DISTFILES += \
     ps.ico
-DESTDIR = D:\dest.rig.5.11
+#DESTDIR = D:\dest.rig.5.11
+DESTDIR = D:\dest.rig.5.12.msvc

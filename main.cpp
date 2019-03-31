@@ -25,13 +25,14 @@ extern void toggle_log(bool recordlog) {
         if(logfile.isOpen()) {
             logfile.write("Close\n");
             logfile.flush();
+            out.flush();
             logfile.close();
         }
         recordinglog=false;
         return;
     }
     if (!logfile.isOpen()) {
-        logfile.setFileName("hyco_ps_log_"+QDateTime::currentDateTime().toString("dd-MM-yyyy_hh-mm-ss-zzz.log"));
+        logfile.setFileName("log/hyco_ps_log_"+QDateTime::currentDateTime().toString("dd-MM-yyyy_hh-mm-ss-zzz.log"));
         logfile.open(QIODevice::WriteOnly | QIODevice::Text);
         logfile.write("Open\n");
     }
@@ -59,7 +60,7 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
         out<<"FATAL:"<<QTime::currentTime().toString("hh:mm:ss:zzz ").toLocal8Bit().data()<<" "<<localMsg.constData()<<"("<<context.file<<":"<<context.line<<", "<<context.function<<")\n";
         abort();
     }
-    if(logfile.isOpen()) logfile.flush();
+    if(logfile.isOpen()) out.flush();
 }
 
 
@@ -83,7 +84,7 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
-    //engine.addImportPath(QStringLiteral("qml"));
+    engine.addImportPath(QStringLiteral("qml"));
     qDebug()<<"importPathList:"<<engine.importPathList();
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     qDebug()<<"Engine loaded"<<giko_name<<"  "<<giko_program;

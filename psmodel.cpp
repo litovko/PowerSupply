@@ -241,8 +241,8 @@ void cPSmodel::sendData()
 {
     char data[5]={0,0,0,0,0};
     data[0] = m_power2500_on*1
-            +   m_power380_on*2
-            +   m_input*4;
+            + m_power380_on*2;
+            //+   m_input*4;
             //+ m_output*8;
     QString Data; // Строка отправки данных.
 // проверяем, есть ли подключение клиента. Если подключения нет, то ничего не отправляем.
@@ -338,8 +338,8 @@ void cPSmodel::readData()
                 relays=val.toInt(&ok,10);  // состояние релюх
                 if(ok) {
                     setPower2500_on(relays & 0x01);
-                    setOutput(relays & 0x02);
-                    setInput(relays & 0x04);
+                    //setOutput(relays & 0x02);
+                    //setInput(relays & 0x04);
                     setPower380_on(relays & 0x08);
                 }
             }
@@ -486,6 +486,7 @@ bool cPSmodel::output() const
 
 void cPSmodel::setOutput(bool output)
 {
+    qDebug()<<"setOutput:"<<output;
     if(output==m_output) return;
     m_output = output;
     emit outputChanged();

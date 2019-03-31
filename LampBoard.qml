@@ -38,6 +38,7 @@ Item {
               height: 60
               width: 60
               active: ps.power380_on
+              onActiveChanged: console.log("380="+ps.power380_on)
 
           }
           MyLamp {
