@@ -51,7 +51,7 @@ class cPSmodel : public QObject
     Q_PROPERTY(bool good_data READ good_data  NOTIFY good_dataChanged)
 
 public:
-    explicit cPSmodel(QObject *parent = 0);
+    explicit cPSmodel(QObject *parent = nullptr);
     virtual ~cPSmodel() {saveSettings();}
     //############ занчения, получаемые по сети от контроллера
     void setCurrent1(const int &current1);

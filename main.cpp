@@ -59,6 +59,8 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
         fprintf(stderr, "F:%s %s (%s:%u, %s)\n",QTime::currentTime().toString("hh:mm:ss:zzz ").toLocal8Bit().data(), localMsg.constData(), context.file, context.line, context.function);
         out<<"FATAL:"<<QTime::currentTime().toString("hh:mm:ss:zzz ").toLocal8Bit().data()<<" "<<localMsg.constData()<<"("<<context.file<<":"<<context.line<<", "<<context.function<<")\n";
         abort();
+    default:
+        break;
     }
     if(logfile.isOpen()) out.flush();
 }
@@ -89,7 +91,8 @@ int main(int argc, char *argv[])
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     qDebug()<<"Engine loaded"<<giko_name<<"  "<<giko_program;
 
-    return app.exec();
+    int ex= app.exec();
+
+    qDebug()<<"Good bye"<<giko_name<<"  "<<giko_program<<"Exit code:"<<ex;
     toggle_log(false);
-    qDebug()<<"Good bye"<<giko_name<<"  "<<giko_program;
 }
