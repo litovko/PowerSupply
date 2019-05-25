@@ -8,7 +8,7 @@
 #include <QDateTime>
 #include <QTime>
 
-#define giko_name "HYCO"
+#define giko_name "MGBU"
 #define giko_program "Power Supply Console"
 #include <stdio.h>
 #include <stdlib.h>

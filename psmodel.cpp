@@ -186,13 +186,13 @@ void cPSmodel::start_client()
 }
 void cPSmodel::clientConnected()
 {
-    qDebug()<<"PS Client connected to address >>>"+this->address()+" port:"+ ::QString().number(m_port);
+    qDebug()<<"PS Client connected to address >>>"<<this->address()<<" port:"<< ::QString().number(m_port);
     m_client_connected=true;
     emit client_connectedChanged();
 }
 void cPSmodel::clientDisconnected()
 {
-    qDebug()<<"PS Client disconnected form address >>>"+this->address()+" port:"+ this->port();
+    qDebug()<<"PS Client disconnected form address >>>"<<this->address()<<" port:"<< this->port();
     setClient_connected(false);
     setGood_data(false);
     setCurrent1(0);
