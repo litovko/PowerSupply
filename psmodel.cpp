@@ -27,7 +27,7 @@ cPSmodel::cPSmodel(QObject *parent) : QObject(parent)
 }
 void cPSmodel::saveSettings()
 {
-    qDebug()<<"PS saveSettings addres:"<<m_address<<"port:"<<m_port;
+    qDebug()<<"v:"<<kvoltage1();
     QSettings settings; //("HYCO", "PSConsole");
     settings.setValue("PSAddress",m_address);
     settings.setValue("PSPort",m_port);

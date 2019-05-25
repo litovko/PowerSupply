@@ -1,5 +1,5 @@
 import QtQuick 2.12
-import QtQuick.Controls 1.6
+import QtQuick.Controls 2.12
 Item {
     id: form
     width: 600
@@ -38,23 +38,29 @@ Item {
 
             GradientStop {
                 position: 1
-                color: "#909090"
+                color: "#555555"
             }
         }
         border.color: "#fae117"
 
         Button {
             id: button
-            x: 373
-            y: 50
+            x: 493
+            y: 101
             text: qsTr("Применить")
+            font.family: "Courier"
             checkable: true
+            height: 30
+            width: 100
+
         }
 
         Button {
             id: button1
             x: 493
             y: 50
+            height: 30
+            width: 100
             text: qsTr("Отмена")
 
         }
@@ -73,7 +79,7 @@ Item {
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignLeft
 
-            TextInput {
+            TextField{
                 id: textInput
 
                 width: 248
@@ -89,7 +95,13 @@ Item {
                 verticalAlignment: TextInput.AlignVCenter
                 font.family: "Times New Roman"
                 anchors.fill: parent
+                anchors.leftMargin: 140
                 font.pixelSize: 12
+                background: Rectangle {
+                        anchors.fill: parent
+                        color: "transparent"
+                        border.color: "gray"
+                    }
 
             }
         }
@@ -104,7 +116,7 @@ Item {
             text: qsTr("Порт:")
             font.pointSize: 10
             horizontalAlignment: Text.AlignLeft
-            TextInput {
+            TextField {
                 id: textInput1
                 width: 248
                 height: parent.height
@@ -112,8 +124,15 @@ Item {
                 text: qsTr("Порт БСЭП")
                 font.family: "Times New Roman"
                 horizontalAlignment: TextInput.AlignHCenter
+                validator: DoubleValidator{bottom: 1; top:65535}
                 font.pixelSize: 12
                 anchors.fill: parent
+                anchors.leftMargin: 140
+                background: Rectangle {
+                        anchors.fill: parent
+                        color: "transparent"
+                        border.color: "gray"
+                    }
                 verticalAlignment: TextInput.AlignVCenter
             }
             anchors.leftMargin: 20
@@ -132,7 +151,7 @@ Item {
             text: qsTr("Интервал")
             font.pointSize: 10
             horizontalAlignment: Text.AlignLeft
-            TextInput {
+            TextField {
                 id: textInput2
                 width: 248
                 height: parent.height
@@ -142,6 +161,12 @@ Item {
                 horizontalAlignment: TextInput.AlignHCenter
                 font.pixelSize: 12
                 anchors.fill: parent
+                anchors.leftMargin: 140
+                background: Rectangle {
+                        anchors.fill: parent
+                        color: "transparent"
+                        border.color: "gray"
+                    }
                 validator: IntValidator{bottom: 100; top:10000}
                 verticalAlignment: TextInput.AlignVCenter
             }
@@ -161,7 +186,7 @@ Item {
             text: qsTr("К ток 1:")
             font.pointSize: 10
             horizontalAlignment: Text.AlignLeft
-            TextInput {
+            TextField {
                 id: textInput3
                 width: 248
                 height: parent.height
@@ -172,6 +197,12 @@ Item {
                 horizontalAlignment: TextInput.AlignHCenter
                 font.pixelSize: 12
                 anchors.fill: parent
+                anchors.leftMargin: 140
+                background: Rectangle {
+                        anchors.fill: parent
+                        color: "transparent"
+                        border.color: "gray"
+                    }
                 verticalAlignment: TextInput.AlignVCenter
             }
             anchors.leftMargin: 20
@@ -190,7 +221,7 @@ Item {
             text: qsTr("К ток 2:")
             font.pointSize: 10
             horizontalAlignment: Text.AlignLeft
-            TextInput {
+            TextField {
                 id: textInput4
                 width: 248
                 height: parent.height
@@ -201,6 +232,12 @@ Item {
                 horizontalAlignment: TextInput.AlignHCenter
                 font.pixelSize: 12
                 anchors.fill: parent
+                anchors.leftMargin: 140
+                background: Rectangle {
+                        anchors.fill: parent
+                        color: "transparent"
+                        border.color: "gray"
+                    }
                 verticalAlignment: TextInput.AlignVCenter
             }
             anchors.leftMargin: 20
@@ -219,7 +256,7 @@ Item {
             text: qsTr("К ток 3:")
             font.pointSize: 10
             horizontalAlignment: Text.AlignLeft
-            TextInput {
+            TextField {
                 id: textInput5
                 width: 248
                 height: parent.height
@@ -230,6 +267,12 @@ Item {
                 horizontalAlignment: TextInput.AlignHCenter
                 font.pixelSize: 12
                 anchors.fill: parent
+                anchors.leftMargin: 140
+                background: Rectangle {
+                        anchors.fill: parent
+                        color: "transparent"
+                        border.color: "gray"
+                    }
                 verticalAlignment: TextInput.AlignVCenter
             }
             anchors.leftMargin: 20
@@ -248,7 +291,7 @@ Item {
             text: qsTr("К напр 1:")
             font.pointSize: 10
             horizontalAlignment: Text.AlignLeft
-            TextInput {
+            TextField {
                 id: textInput6
                 width: 248
                 height: parent.height
@@ -259,6 +302,12 @@ Item {
                 horizontalAlignment: TextInput.AlignHCenter
                 font.pixelSize: 12
                 anchors.fill: parent
+                anchors.leftMargin: 140
+                background: Rectangle {
+                        anchors.fill: parent
+                        color: "transparent"
+                        border.color: "gray"
+                    }
                 verticalAlignment: TextInput.AlignVCenter
             }
             anchors.leftMargin: 20
@@ -277,7 +326,7 @@ Item {
             text: qsTr("К напр 2:")
             font.pointSize: 10
             horizontalAlignment: Text.AlignLeft
-            TextInput {
+            TextField {
                 id: textInput7
                 width: 248
                 height: parent.height
@@ -288,6 +337,12 @@ Item {
                 horizontalAlignment: TextInput.AlignHCenter
                 font.pixelSize: 12
                 anchors.fill: parent
+                anchors.leftMargin: 140
+                background: Rectangle {
+                        anchors.fill: parent
+                        color: "transparent"
+                        border.color: "gray"
+                    }
                 verticalAlignment: TextInput.AlignVCenter
             }
             anchors.leftMargin: 20
@@ -306,7 +361,7 @@ Item {
             text: qsTr("К напр 3:")
             font.pointSize: 10
             horizontalAlignment: Text.AlignLeft
-            TextInput {
+            TextField {
                 id: textInput8
                 width: 248
                 height: parent.height
@@ -317,6 +372,12 @@ Item {
                 horizontalAlignment: TextInput.AlignHCenter
                 font.pixelSize: 12
                 anchors.fill: parent
+                anchors.leftMargin: 140
+                background: Rectangle {
+                        anchors.fill: parent
+                        color: "transparent"
+                        border.color: "gray"
+                    }
                 verticalAlignment: TextInput.AlignVCenter
             }
             anchors.leftMargin: 20
@@ -335,7 +396,7 @@ Item {
             text: qsTr("Порог.ток:")
             font.pointSize: 10
             horizontalAlignment: Text.AlignLeft
-            TextInput {
+            TextField {
                 id: textInput9
                 width: 248
                 height: parent.height
@@ -346,6 +407,12 @@ Item {
                 horizontalAlignment: TextInput.AlignHCenter
                 font.pixelSize: 12
                 anchors.fill: parent
+                anchors.leftMargin: 140
+                background: Rectangle {
+                        anchors.fill: parent
+                        color: "transparent"
+                        border.color: "gray"
+                    }
                 verticalAlignment: TextInput.AlignVCenter
             }
             anchors.leftMargin: 20
@@ -364,17 +431,23 @@ Item {
             text: qsTr("Порог.напр:")
             font.pointSize: 10
             horizontalAlignment: Text.AlignLeft
-            TextInput {
+            TextField {
                 id: textInput10
                 width: 248
                 height: parent.height
                 color: "#ffffff"
                 text: qsTr("Порт БСЭП")
-                validator: DoubleValidator{bottom: 0; top:10000}
+                validator: IntValidator{bottom: 0; top:10000}
                 font.family: "Times New Roman"
                 horizontalAlignment: TextInput.AlignHCenter
                 font.pixelSize: 12
                 anchors.fill: parent
+                anchors.leftMargin: 140
+                background: Rectangle {
+                        anchors.fill: parent
+                        color: "transparent"
+                        border.color: "gray"
+                    }
                 verticalAlignment: TextInput.AlignVCenter
             }
             anchors.leftMargin: 20
@@ -393,7 +466,7 @@ Item {
             text: qsTr("Порог.темп:")
             font.pointSize: 10
             horizontalAlignment: Text.AlignLeft
-            TextInput {
+            TextField {
                 id: textInput11
                 width: 248
                 height: parent.height
@@ -401,8 +474,15 @@ Item {
                 text: qsTr("Порт БСЭП")
                 font.family: "Times New Roman"
                 horizontalAlignment: TextInput.AlignHCenter
+                validator:IntValidator{bottom: 0; top:10000}
                 font.pixelSize: 12
                 anchors.fill: parent
+                anchors.leftMargin: 140
+                background: Rectangle {
+                        anchors.fill: parent
+                        color: "transparent"
+                        border.color: "gray"
+                    }
                 verticalAlignment: TextInput.AlignVCenter
             }
             anchors.leftMargin: 20
@@ -421,17 +501,23 @@ Item {
             text: qsTr("Порог.влажн:")
             font.pointSize: 10
             horizontalAlignment: Text.AlignLeft
-            TextInput {
+            TextField {
                 id: textInput12
                 width: 248
                 height: parent.height
                 color: "#ffffff"
                 text: qsTr("Порт БСЭП")
-                IntValidator{bottom: 100; top:10000}
+                validator:IntValidator{bottom: 0; top:10000}
                 font.family: "Times New Roman"
                 horizontalAlignment: TextInput.AlignHCenter
                 font.pixelSize: 12
                 anchors.fill: parent
+                anchors.leftMargin: 140
+                background: Rectangle {
+                        anchors.fill: parent
+                        color: "transparent"
+                        border.color: "gray"
+                    }
                 verticalAlignment: TextInput.AlignVCenter
             }
             anchors.leftMargin: 20
@@ -450,17 +536,23 @@ Item {
             text: qsTr("Порог.напр.мин:")
             font.pointSize: 10
             horizontalAlignment: Text.AlignLeft
-            TextInput {
+            TextField {
                 id: textInput13
                 width: 248
                 height: parent.height
                 color: "#ffffff"
                 text: qsTr("Порт БСЭП")
-                IntValidator{bottom: 100; top:10000}
+                validator: IntValidator{bottom: 0; top:10000}
                 font.family: "Times New Roman"
                 horizontalAlignment: TextInput.AlignHCenter
                 font.pixelSize: 12
                 anchors.fill: parent
+                anchors.leftMargin: 140
+                background: Rectangle {
+                        anchors.fill: parent
+                        color: "transparent"
+                        border.color: "gray"
+                    }
                 verticalAlignment: TextInput.AlignVCenter
             }
             anchors.leftMargin: 20

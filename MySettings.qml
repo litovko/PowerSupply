@@ -10,13 +10,13 @@ MySettingsForm {
         textInput1.text = ps.port
         textInput2.text = ps.timer_send_interval
 
-        textInput3.text = ps.kcurrent1
-        textInput4.text = ps.kcurrent2
-        textInput5.text = ps.kcurrent3
+        textInput3.text = ps.kcurrent1.toLocaleString()
+        textInput4.text = ps.kcurrent2.toLocaleString()
+        textInput5.text = ps.kcurrent3.toLocaleString()
 
-        textInput6.text = ps.kvoltage1
-        textInput7.text = ps.kvoltage2
-        textInput8.text = ps.kvoltage3
+        textInput6.text = ps.kvoltage1.toLocaleString()
+        textInput7.text = ps.kvoltage2.toLocaleString()
+        textInput8.text = ps.kvoltage3.toLocaleString()
 
         textInput9.text = ps.thrcurrent
         textInput10.text = ps.thrvoltage
@@ -32,13 +32,12 @@ MySettingsForm {
 
         ps.timer_send_interval = parseInt(textInput2.text)
 
-        ps.kcurrent1 = parseFloat(textInput3.text)
-        ps.kcurrent2 = parseFloat(textInput4.text)
-        ps.kcurrent3 = parseFloat(textInput5.text)
-
-        ps.kvoltage1 = parseFloat(textInput6.text)
-        ps.kvoltage2 = parseFloat(textInput7.text)
-        ps.kvoltage3 = parseFloat(textInput8.text)
+        ps.kcurrent1 = parseFloat(textInput3.text.replace(",","."))
+        ps.kcurrent2 = parseFloat(textInput4.text.replace(",","."))
+        ps.kcurrent3 = parseFloat(textInput5.text.replace(",","."))
+        ps.kvoltage1 = parseFloat(textInput6.text.replace(",","."))
+        ps.kvoltage2 = parseFloat(textInput7.text.replace(",","."))
+        ps.kvoltage3 = parseFloat(textInput8.text.replace(",","."))
 
         ps.thrcurrent = parseInt(textInput9.text)
         ps.thrvoltage = parseInt(textInput10.text)
