@@ -12,6 +12,7 @@ class cPSmodel : public QObject
 {
 
     Q_OBJECT
+
     Q_PROPERTY(int current1 READ current1 WRITE setCurrent1 NOTIFY current1Changed)
     Q_PROPERTY(int current2 READ current2 WRITE setCurrent2 NOTIFY current2Changed)
     Q_PROPERTY(int current3 READ current3 WRITE setCurrent3 NOTIFY current3Changed)
@@ -44,6 +45,21 @@ class cPSmodel : public QObject
     Q_PROPERTY(int port READ port WRITE setPort NOTIFY portChanged)
     Q_PROPERTY(int timer_send_interval READ timer_send_interval WRITE setTimer_send_interval NOTIFY timer_send_intervalChanged)
     Q_PROPERTY(int timer_connect_interval READ timer_connect_interval WRITE setTimer_connect_interval NOTIFY timer_connect_intervalChanged)
+
+    Q_PROPERTY(int thrcurrent READ thrcurrent WRITE setThrcurrent NOTIFY thrcurrentChanged)
+    Q_PROPERTY(int thrvoltage READ thrvoltage WRITE setThrvoltage NOTIFY thrvoltageChanged)
+    Q_PROPERTY(int thrtemperature READ thrtemperature WRITE setThrtemperature NOTIFY temperatureChanged)
+    Q_PROPERTY(int thrhumid READ thrhumid WRITE setThrhumid NOTIFY humidChanged)
+
+    Q_PROPERTY(int minvoltage READ minvoltage WRITE setMinvoltage NOTIFY minvoltageChanged)
+
+    Q_PROPERTY(double kcurrent1 READ kcurrent1 WRITE setKcurrent1 NOTIFY kcurrent1Changed)
+    Q_PROPERTY(double kcurrent2 READ kcurrent2 WRITE setKcurrent2 NOTIFY kcurrent2Changed)
+    Q_PROPERTY(double kcurrent3 READ kcurrent3 WRITE setKcurrent3 NOTIFY kcurrent3Changed)
+
+    Q_PROPERTY(double kvoltage1 READ kvoltage1 WRITE setKvoltage1 NOTIFY kvoltage1Changed)
+    Q_PROPERTY(double kvoltage2 READ kvoltage2 WRITE setKvoltage2 NOTIFY kvoltage2Changed)
+    Q_PROPERTY(double kvoltage3 READ kvoltage3 WRITE setKvoltage3 NOTIFY kvoltage3Changed)
 
     //############ свойства - статусы tcp соединения
 
@@ -150,6 +166,41 @@ public:
     int voltage4() const;
     void setVoltage4(int voltage4);
 
+    int thrcurrent() const;
+
+    int thrvoltage() const;
+
+    void setThrcurrent(int thrcurrent);
+
+    void setThrvoltage(int thrvoltage);
+
+    int minvoltage() const;
+    void setMinvoltage(int minvoltage);
+
+    int thrtemperature() const;
+    void setThrtemperature(int thrtemperature);
+
+    int thrhumid() const;
+    void setThrhumid(int thrhumid);
+
+    double kcurrent1() const;
+    void setKcurrent1(double kcurrent1);
+
+    double kcurrent2() const;
+    void setKcurrent2(double kcurrent2);
+
+    double kcurrent3() const;
+    void setKcurrent3(double kcurrent3);
+
+    double kvoltage1() const;
+    void setKvoltage1(double kvoltage1);
+
+    double kvoltage2() const;
+    void setKvoltage2(double kvoltage2);
+
+    double kvoltage3() const;
+    void setKvoltage3(double kvoltage3);
+
 signals:
     void current1Changed();
     void current2Changed();
@@ -183,6 +234,18 @@ signals:
     void client_connectedChanged();
     void good_dataChanged();
     void check_typeChanged();
+    void thrcurrentChanged();
+    void thrvoltageChanged();
+    void thrtemperatureChanged();
+    void thrhumidChanged();
+    void minvoltageChanged();
+    void kcurrent1Changed();
+    void kcurrent2Changed();
+    void kcurrent3Changed();
+    void kvoltage1Changed();
+    void kvoltage2Changed();
+    void kvoltage3Changed();
+
 
 
 public slots:

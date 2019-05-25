@@ -8,7 +8,7 @@
 #include <QDateTime>
 #include <QTime>
 
-#define giko_name "MGBU"
+#define giko_name "HYCO"
 #define giko_program "Power Supply Console"
 #include <stdio.h>
 #include <stdlib.h>
@@ -32,7 +32,7 @@ extern void toggle_log(bool recordlog) {
         return;
     }
     if (!logfile.isOpen()) {
-        logfile.setFileName("log/hyco_ps_log_"+QDateTime::currentDateTime().toString("dd-MM-yyyy_hh-mm-ss-zzz.log"));
+        logfile.setFileName("log/mgbu_ps_log_"+QDateTime::currentDateTime().toString("dd-MM-yyyy_hh-mm-ss-zzz.log"));
         logfile.open(QIODevice::WriteOnly | QIODevice::Text);
         logfile.write("Open\n");
     }
@@ -94,5 +94,6 @@ int main(int argc, char *argv[])
     int ex= app.exec();
 
     qDebug()<<"Good bye"<<giko_name<<"  "<<giko_program<<"Exit code:"<<ex;
-    toggle_log(false);
+    out.flush();
+    //toggle_log(false);
 }

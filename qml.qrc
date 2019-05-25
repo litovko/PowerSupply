@@ -8,5 +8,7 @@
         <file>Pribor.qml</file>
         <file>PriborBoard.qml</file>
         <file>MyCharts.qml</file>
+        <file>MySettings.qml</file>
+        <file>MySettingsForm.ui.qml</file>
     </qresource>
 </RCC>

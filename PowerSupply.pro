@@ -4,6 +4,8 @@ QT += qml quick charts
 CONFIG += c++11 console
 
 SOURCES += main.cpp \
+    psmodel.cpp \
+    main.cpp \
     psmodel.cpp
 
 RESOURCES += qml.qrc
@@ -17,6 +19,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    psmodel.h \
     psmodel.h
 
 RC_ICONS = ps.ico

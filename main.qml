@@ -10,11 +10,15 @@ Window {
     color: "black"
     height: 700
     width: 1280
-    //color: "transparent"
     MouseArea {
+        id: ma
         anchors.fill: parent
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
         onDoubleClicked: {
             win.fcommand("FULLSCREEN")
+        }
+        onClicked: {
+            if (mouse.button === Qt.RightButton)  fcommand("SETTINGS")
         }
     }
     Settings {
@@ -60,8 +64,8 @@ Window {
         case "HELP":
 
             break
-        case "MENU":
-
+        case "SETTINGS":
+            sett.visible=!sett.visible;
             break
         case "FULLSCREEN":
             win.visibility = win.visibility
@@ -114,6 +118,14 @@ Window {
                 ch3.addpoint(ps.current3 / 10)
             }
         }
+        MySettings{
+            id: sett
+            visible: false
+            z:5
+            anchors.centerIn: parent
+
+        }
+
         Rectangle {
             id: st
             height: 40

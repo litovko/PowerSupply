@@ -27,7 +27,7 @@ cPSmodel::cPSmodel(QObject *parent) : QObject(parent)
 }
 void cPSmodel::saveSettings()
 {
-    //qDebug()<<"PS saveSettings addres:"<<m_address<<"port:"<<m_port;
+    qDebug()<<"PS saveSettings addres:"<<m_address<<"port:"<<m_port;
     QSettings settings; //("HYCO", "PSConsole");
     settings.setValue("PSAddress",m_address);
     settings.setValue("PSPort",m_port);
@@ -348,6 +348,116 @@ void cPSmodel::readData()
         setGood_data(false);
         qWarning()<<"PS: wrong data receved";
     }
+}
+
+double cPSmodel::kvoltage3() const
+{
+    return m_kvoltage3;
+}
+
+void cPSmodel::setKvoltage3(double kvoltage3)
+{
+    m_kvoltage3 = kvoltage3;
+}
+
+double cPSmodel::kvoltage2() const
+{
+    return m_kvoltage2;
+}
+
+void cPSmodel::setKvoltage2(double kvoltage2)
+{
+    m_kvoltage2 = kvoltage2;
+}
+
+double cPSmodel::kvoltage1() const
+{
+    return m_kvoltage1;
+}
+
+void cPSmodel::setKvoltage1(double kvoltage1)
+{
+    m_kvoltage1 = kvoltage1;
+}
+
+double cPSmodel::kcurrent3() const
+{
+    return m_kcurrent3;
+}
+
+void cPSmodel::setKcurrent3(double kcurrent3)
+{
+    m_kcurrent3 = kcurrent3;
+}
+
+double cPSmodel::kcurrent2() const
+{
+    return m_kcurrent2;
+}
+
+void cPSmodel::setKcurrent2(double kcurrent2)
+{
+    m_kcurrent2 = kcurrent2;
+}
+
+double cPSmodel::kcurrent1() const
+{
+    return m_kcurrent1;
+}
+
+void cPSmodel::setKcurrent1(double kcurrent1)
+{
+    m_kcurrent1 = kcurrent1;
+}
+
+int cPSmodel::thrhumid() const
+{
+    return m_thrhumid;
+}
+
+void cPSmodel::setThrhumid(int thrhumid)
+{
+    m_thrhumid = thrhumid;
+}
+
+int cPSmodel::thrtemperature() const
+{
+    return m_thrtemperature;
+}
+
+void cPSmodel::setThrtemperature(int thrtemperature)
+{
+    m_thrtemperature = thrtemperature;
+}
+
+int cPSmodel::minvoltage() const
+{
+    return m_minvoltage;
+}
+
+void cPSmodel::setMinvoltage(int minvoltage)
+{
+    m_minvoltage = minvoltage;
+}
+
+void cPSmodel::setThrvoltage(int thrvoltage)
+{
+    m_thrvoltage = thrvoltage;
+}
+
+void cPSmodel::setThrcurrent(int thrcurrent)
+{
+    m_thrcurrent = thrcurrent;
+}
+
+int cPSmodel::thrvoltage() const
+{
+    return m_thrvoltage;
+}
+
+int cPSmodel::thrcurrent() const
+{
+    return m_thrcurrent;
 }
 
 int cPSmodel::voltage4() const
