@@ -66,8 +66,8 @@ public:
     void setAddress(const QString  &address);
     QString address() const;
 
-    void setPort(const int &port);
-    int  port() const;
+    void setPort(const uint16_t &port);
+    uint16_t  port() const;
 
     void setTimer_send_interval(const int &timer_send_interval);
     int  timer_send_interval() const;
@@ -231,7 +231,7 @@ private:
     unsigned int m_packetid=0;
 
     QString m_address="localhost";
-    int m_port=1212;
+    uint16_t m_port=1212;
 
     bool m_client_connected = false;
 

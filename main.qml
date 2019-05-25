@@ -3,7 +3,6 @@ import QtQuick.Window 2.0
 import Qt.labs.settings 1.0
 import Gyco 1.0
 
-
 Window {
     id: win
     visible: true
@@ -14,7 +13,7 @@ Window {
     //color: "transparent"
     MouseArea {
         anchors.fill: parent
-        onDoubleClicked:  {
+        onDoubleClicked: {
             win.fcommand("FULLSCREEN")
         }
     }
@@ -28,49 +27,47 @@ Window {
         id: ps
     }
 
+    function fcommand(cmd) {
+        console.log("COMMAND=" + cmd)
+        switch (cmd) {
+        case "QUIT":
+            Qt.quit()
+            break
+        case "POWER ON":
+            ps.power380_on = true
+            break
+        case "POWER OFF":
+            ps.power380_on = false
+            break
+        case "HION":
+            ps.power2500_on = true
+            break
+        case "HIOFF":
+            ps.power2500_on = false
+            break
+        case "INP1":
+            ps.input = false
+            break
+        case "INP2":
+            ps.input = true
+            break
+        case "OUT1":
+            ps.output = false
+            break
+        case "OUT2":
+            ps.output = true
+            break
+        case "HELP":
 
-    function fcommand (cmd) {
-        console.log ("COMMAND="+cmd)
-        switch(cmd) {
-          case "QUIT":
-              Qt.quit();
-              break;
-          case "POWER ON":
-              ps.power380_on=true
-              break;
-          case "POWER OFF":
-              ps.power380_on=false
-              break;
-          case "HION":
-              ps.power2500_on=true
-              break;
-          case "HIOFF":
-              ps.power2500_on=false
-              break;
-          case "INP1":
-              ps.input=false;
-              break;
-          case "INP2":
-              ps.input=true;
-              break;
-          case "OUT1":
-              ps.output=false;
-              break;
-          case "OUT2":
-              ps.output=true;
-              break;
-          case "HELP":
+            break
+        case "MENU":
 
-              break;
-
-          case "MENU":
-
-              break;
-          case "FULLSCREEN":
-              win.visibility = win.visibility===Window.FullScreen?Window.Maximized:Window.FullScreen;
-              break;
+            break
+        case "FULLSCREEN":
+            win.visibility = win.visibility
+                    === Window.FullScreen ? Window.Maximized : Window.FullScreen
+            break
         }
-
     }
 
     Rectangle {
@@ -79,45 +76,55 @@ Window {
         color: "transparent"
         anchors.fill: parent
         border.color: "yellow"
-        radius:20
+        radius: 20
         border.width: 3
-        focus:true
+        focus: true
 
-        LampBoard{
+        LampBoard {
             id: lb
             height: 70
             anchors.margins: 5
-            anchors.left: parent.left; anchors.top: parent.top; anchors.right: parent.right
+            anchors.left: parent.left
+            anchors.top: parent.top
+            anchors.right: parent.right
         }
-        ButtonBoard{
+        ButtonBoard {
             id: bb
             height: 70
             anchors.margins: 5
-            anchors.left: parent.left; anchors.right: parent.right; anchors.top: lb.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.top: lb.bottom
         }
-        PriborBoard{
-            id:pb
+        PriborBoard {
+            id: pb
             height: 140
             anchors.margins: 5
-            anchors.left: parent.left; anchors.right: parent.right; anchors.top: bb.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.top: bb.bottom
         }
         Timer {
-                interval: 500; running: true; repeat: true
-                onTriggered: {
-                    ch1.addpoint(ps.current1/10);
-                    ch2.addpoint(ps.current2/10);
-                    ch3.addpoint(ps.current3/10);
-                }
+            interval: 500
+            running: true
+            repeat: true
+            onTriggered: {
+                ch1.addpoint(ps.current1 / 10)
+                ch2.addpoint(ps.current2 / 10)
+                ch3.addpoint(ps.current3 / 10)
             }
-        Rectangle{
-            id:st
+        }
+        Rectangle {
+            id: st
             height: 40
             color: "transparent"
             border.color: "darkgray"
             radius: 15
             border.width: 2
             anchors.margins: 5
-            anchors.left: parent.left; anchors.right: parent.right; anchors.top: pb.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.top: pb.bottom
 
             Text {
                 id: err
@@ -128,6 +135,7 @@ Window {
                 text: ps.error
                 font.pointSize: 8
                 onTextChanged: {
+
                     /*
                     Состояние ошибок контроллера
                     1 Отключение питания по превышению тока любой из фаз
@@ -136,13 +144,17 @@ Window {
                     4 Отключение питания по превышению температуры
                     5 Отключение питания по превышению влажности
                     */
-                    errtext.text=""
-                    if (ps.error&1) errtext.text+="<Превышен ток>"
-                    if (ps.error&2) errtext.text+="<Превышено напряжение>"
-                    if (ps.error&4) errtext.text+="<!!!Изоляция!!!>"
-                    if (ps.error&4) errtext.text+="<Первышение температуры>"
-                    if (ps.error&4) errtext.text+="<Первышение влажности>"
-
+                    errtext.text = ""
+                    if (ps.error & 1)
+                        errtext.text += "<Превышен ток>"
+                    if (ps.error & 2)
+                        errtext.text += "<Превышено напряжение>"
+                    if (ps.error & 4)
+                        errtext.text += "<!!!Изоляция!!!>"
+                    if (ps.error & 4)
+                        errtext.text += "<Первышение температуры>"
+                    if (ps.error & 4)
+                        errtext.text += "<Первышение влажности>"
                 }
             }
             Text {
@@ -150,7 +162,7 @@ Window {
                 color: "red"
                 font.bold: true
                 anchors.horizontalCenter: parent.horizontalCenter
-                anchors.bottom:  parent.bottom
+                anchors.bottom: parent.bottom
                 anchors.margins: 5
                 font.pointSize: 14
             }
@@ -182,8 +194,5 @@ Window {
                 chartName: "Фаза 3"
             }
         }
-
     }
-
 }
-

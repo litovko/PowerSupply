@@ -57,7 +57,7 @@ void cPSmodel::readSettings()
 
     QSettings settings;//("HYCO", "PS Console");
     m_address=settings.value("PSAddress","localhost").toString();
-    m_port=settings.value("PSPort","1212").toInt();
+    m_port=static_cast<unsigned short> (settings.value("PSPort","1212").toUInt());
     m_timer_send_interval=settings.value("PSSendInterval","2000").toInt();
     m_timer_connect_interval=settings.value("PSConnectInterval","30000").toInt();
     m_kcurrent1=settings.value("Kcurrent1",1).toDouble();
@@ -126,12 +126,12 @@ QString cPSmodel::address() const
     return m_address;
 }
 
-int cPSmodel::port() const
+uint16_t cPSmodel::port() const
 {
     return m_port;
 }
 
-void cPSmodel::setPort(const int  &port)
+void cPSmodel::setPort(const uint16_t &port)
 {
     if(port==m_port) return;
     m_port = port;
@@ -218,9 +218,7 @@ void cPSmodel::clientDisconnected()
 
 void cPSmodel::updateClientProgress(qint64 numBytes)
 {
-    // callen when the TCP client has written some bytes
-    bytesWritten += (int)numBytes;
-    //qDebug()<<"Rig Update client progress >>>"+::QString().number(bytesWritten);
+    bytesWritten += static_cast<int>(numBytes);
 }
 
 void cPSmodel::displayError(QAbstractSocket::SocketError socketError)
@@ -269,7 +267,7 @@ void cPSmodel::sendData()
 
     qDebug()<<"PS - send data: "<<Data;
 
-    bytesToWrite = (int)tcpClient.write(::QByteArray(Data.toLatin1()).data());
+    bytesToWrite = static_cast<int>(tcpClient.write(::QByteArray(Data.toLatin1()).data()));
     if (bytesToWrite<0)qWarning()<<"Rig: Something wrong due to send data >>>"+tcpClient.errorString();
     //if (bytesToWrite>=0)qDebug()<<"Rig: Data sent>>>"<<Data<<":"<<::QString().number(bytesToWrite);
 }
@@ -306,7 +304,7 @@ void cPSmodel::readData()
             qDebug()<<"PS-tag:"<<s<<"value:"<<val;
 
             if (s=="pids") {
-                pids=val.toInt(&ok,10);
+                pids=val.toUInt(&ok,10);
                 if (pids==packetid()) {
                        //m_packetid+=1;
                        ok=true;
