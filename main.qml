@@ -9,7 +9,7 @@ Window {
     title: "HYCO ИСТОЧНИК ПИТАНИЯ"
     color: "black"
     height: 700
-    width: 800
+    width: 1280
     //color: "transparent"
     MouseArea {
         anchors.fill: parent
@@ -151,9 +151,9 @@ Window {
                         errtext.text += "<Превышено напряжение>"
                     if (ps.error & 4)
                         errtext.text += "<!!!Изоляция!!!>"
-                    if (ps.error & 4)
-                        errtext.text += "<Первышение температуры>"
-                    if (ps.error & 4)
+                    if (ps.error & 8)
+                        errtext.text += "<Превышение температуры>"
+                    if (ps.error & 16)
                         errtext.text += "<Первышение влажности>"
                 }
             }
