@@ -87,9 +87,9 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
 
     engine.addImportPath(QStringLiteral("qml"));
-    qDebug()<<"importPathList:"<<engine.importPathList();
+    //qDebug()<<"importPathList:"<<engine.importPathList();
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-    qDebug()<<"Engine loaded"<<giko_name<<"  "<<giko_program;
+    //qDebug()<<"Engine loaded"<<giko_name<<"  "<<giko_program;
 
     int ex= app.exec();
 
