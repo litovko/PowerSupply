@@ -25,6 +25,7 @@ MySettingsForm {
         textInput13.text = ps.minvoltage
 
     }
+    onVisibleChanged: Component.onCompleted()
 
     button.onClicked: {
         ps.address = textInput.text
