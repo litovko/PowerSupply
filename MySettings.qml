@@ -5,27 +5,29 @@ MySettingsForm {
     button1.onClicked: {
         visible = false
     }
-    Component.onCompleted: {
+    function fill_controls(){
         textInput.text = ps.address
         textInput1.text = ps.port
         textInput2.text = ps.timer_send_interval
 
-        textInput3.text = ps.kcurrent1.toLocaleString()
-        textInput4.text = ps.kcurrent2.toLocaleString()
-        textInput5.text = ps.kcurrent3.toLocaleString()
+        textInput3.text = ps.kcurrent1//.toLocaleString()
+        textInput4.text = ps.kcurrent2//.toLocaleString()
+        textInput5.text = ps.kcurrent3//.toLocaleString()
 
-        textInput6.text = ps.kvoltage1.toLocaleString()
-        textInput7.text = ps.kvoltage2.toLocaleString()
-        textInput8.text = ps.kvoltage3.toLocaleString()
+        textInput6.text = ps.kvoltage1//.toLocaleString()
+        textInput7.text = ps.kvoltage2//.toLocaleString()
+        textInput8.text = ps.kvoltage3//.toLocaleString()
 
         textInput9.text = ps.thrcurrent
         textInput10.text = ps.thrvoltage
         textInput11.text = ps.thrtemperature
         textInput12.text = ps.thrhumid
         textInput13.text = ps.minvoltage
-
+        print("fill:"+ps.kvoltage1)
     }
-    onVisibleChanged: Component.onCompleted()
+
+    Component.onCompleted: fill_controls()
+    onVisibleChanged: fill_controls()
 
     button.onClicked: {
         ps.address = textInput.text
@@ -46,6 +48,6 @@ MySettingsForm {
         ps.thrhumid = parseInt(textInput12.text)
         ps.minvoltage = parseInt(textInput13.text)
 
-        mf.visible = false
+        //mf.visible = false
     }
 }

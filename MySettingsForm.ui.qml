@@ -61,7 +61,7 @@ Item {
             y: 50
             height: 30
             width: 100
-            text: qsTr("Отмена")
+            text: qsTr("Закрыть")
 
         }
 

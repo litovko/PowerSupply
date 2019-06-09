@@ -166,7 +166,7 @@ Window {
                     if (ps.error & 8)
                         errtext.text += "<Превышение температуры>"
                     if (ps.error & 16)
-                        errtext.text += "<Первышение влажности>"
+                        errtext.text += "<Превышение влажности>"
                 }
             }
             Text {

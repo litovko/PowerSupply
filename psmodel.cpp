@@ -74,7 +74,7 @@ void cPSmodel::readSettings()
     m_thrhumid=settings.value("THRhumidity","80").toInt();
     m_timeout=settings.value("PStimeout","10").toInt();
 
-
+    qInfo()<<"kvolt:"<<m_kvoltage1;
 
 }
 

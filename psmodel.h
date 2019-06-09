@@ -309,9 +309,9 @@ private:
     double m_kcurrent1=1;
     double m_kcurrent2=1;
     double m_kcurrent3=1;
-    double m_kvoltage1=1;
-    double m_kvoltage2=1;
-    double m_kvoltage3=1;
+    double m_kvoltage1=2506;
+    double m_kvoltage2=2506;
+    double m_kvoltage3=2506;
 
 
 
