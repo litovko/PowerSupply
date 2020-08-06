@@ -1,5 +1,6 @@
 #include "psmodel.h"
 #include <QDebug>
+#include <QDateTime>
 
 cPSmodel::cPSmodel(QObject *parent) : QObject(parent)
 {
@@ -237,6 +238,8 @@ void cPSmodel::displayError(QAbstractSocket::SocketError socketError)
 
 void cPSmodel::sendData()
 {
+    QDateTime asd(QDateTime::currentDateTime());
+    uint unixTime = asd.toTime_t();
     char data[5]={0,0,0,0,0};
     data[0] = m_power2500_on*1
             + m_power380_on*2;
@@ -263,6 +266,7 @@ void cPSmodel::sendData()
             +";thrh:"+QString().number(m_thrhumid,'f',0)
             +";swto:"+QString().number(m_timeout,'f',0)
             +";pids:"+QString().number(m_packetid)
+            +";time:"+QString().number(unixTime)
             +"}FEDCA987";
 
     qDebug()<<"PS - send data: "<<Data;
