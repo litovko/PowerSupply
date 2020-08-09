@@ -9,6 +9,7 @@ MySettingsForm {
         textInput.text = ps.address
         textInput1.text = ps.port
         textInput2.text = ps.timer_send_interval
+        textInput22.text = ps.disconnect_timeout
 
         textInput3.text = ps.kcurrent1//.toLocaleString()
         textInput4.text = ps.kcurrent2//.toLocaleString()
@@ -34,6 +35,8 @@ MySettingsForm {
         ps.port = textInput1.text
 
         ps.timer_send_interval = parseInt(textInput2.text)
+
+        ps.disconnect_timeout = parseInt(textInput22.text)
 
         ps.kcurrent1 = parseFloat(textInput3.text.replace(",","."))
         ps.kcurrent2 = parseFloat(textInput4.text.replace(",","."))

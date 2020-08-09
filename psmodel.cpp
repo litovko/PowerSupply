@@ -48,6 +48,7 @@ void cPSmodel::saveSettings()
     settings.setValue("THRtemperature",m_thrtemperature);
     settings.setValue("THRhumidity",m_thrhumid);
     settings.setValue("PStimeout",m_timeout);
+    settings.setValue("disconnect_timeout",m_disconnect_timeout);
 
 
 
@@ -74,6 +75,7 @@ void cPSmodel::readSettings()
     m_thrtemperature=settings.value("THRtemperature","60").toInt();
     m_thrhumid=settings.value("THRhumidity","80").toInt();
     m_timeout=settings.value("PStimeout","10").toInt();
+    m_disconnect_timeout = settings.value("disconnect_timeout","10000").toInt();
 
     qInfo()<<"kvolt:"<<m_kvoltage1;
 
@@ -180,6 +182,10 @@ void cPSmodel::start_client()
 {
     if (m_client_connected) return;
     bytesWritten = 0;
+    if (tcpClient.state()) {
+        qDebug()<<"tcpstate:"<<tcpClient.state();
+        return;
+    }
     qDebug()<<"PS Start client >>>"<<m_address<<"port"<<::QString().number(m_port);
     
     tcpClient.connectToHost(m_address, m_port);
@@ -196,21 +202,27 @@ void cPSmodel::clientDisconnected()
     qDebug()<<"PS Client disconnected form address >>>"<<this->address()<<" port:"<< this->port();
     setClient_connected(false);
     setGood_data(false);
-    setCurrent1(0);
-    setCurrent2(0);
-    setCurrent3(0);
-    setVoltage1(0);
-    setVoltage2(0);
-    setVoltage3(0);
-    setHumid(0);
-    setTemperature(0);
-    setPwr1(0);
-    setPwr2(0);
-    setPwr3(0);
-    setPwrt(0);
-    setPower380_on(false);
-    setPower2500_on(false);
-    setPacketid(0);
+    QTimer::singleShot(m_disconnect_timeout,  [this] () {
+    if (!good_data()) {
+        setCurrent1(0);
+        setCurrent2(0);
+        setCurrent3(0);
+        setVoltage1(0);
+        setVoltage2(0);
+        setVoltage3(0);
+        setHumid(0);
+        setTemperature(0);
+        setPwr1(0);
+        setPwr2(0);
+        setPwr3(0);
+        setPwrt(0);
+        setPower380_on(false);
+        setPower2500_on(false);
+        setPacketid(0);
+        qDebug()<<"Too long to restore connection!";
+    }
+    });
+
 }
 
 

@@ -3,7 +3,7 @@ import QtQuick.Controls 2.12
 Item {
     id: form
     width: 600
-    height: 500
+    height: 600
     property alias textInput13: textInput13
     property alias textInput12: textInput12
     property alias textInput11: textInput11
@@ -16,6 +16,7 @@ Item {
     property alias textInput4: textInput4
     property alias textInput3: textInput3
     property alias textInput2: textInput2
+    property alias textInput22: textInput22
     property alias element: form
     property alias label: label
     property alias label1: label1
@@ -24,6 +25,7 @@ Item {
     property alias button1: button1
     property alias button: button
     property alias rectangle: rectangle
+
 
     Rectangle {
         id: rectangle
@@ -175,6 +177,40 @@ Item {
             verticalAlignment: Text.AlignVCenter
             anchors.left: parent.left
         }
+        Text {
+                    id: label21
+                    x: 1
+                    y: 473
+                    width: 448
+                    height: 25
+                    color: "#ffffff"
+                    text: qsTr("Таймаут сброса данных")
+                    font.pointSize: 10
+                    horizontalAlignment: Text.AlignLeft
+                    TextField {
+                        id: textInput22
+                        width: 248
+                        height: parent.height
+                        color: "#ffffff"
+                        text: qsTr("Таймаут сброса данных")
+                        font.family: "Times New Roman"
+                        horizontalAlignment: TextInput.AlignHCenter
+                        font.pixelSize: 12
+                        anchors.fill: parent
+                        anchors.leftMargin: 140
+                        background: Rectangle {
+                                anchors.fill: parent
+                                color: "transparent"
+                                border.color: "gray"
+                            }
+                        validator: IntValidator{bottom: 1000; top:100000}
+                        verticalAlignment: TextInput.AlignVCenter
+                    }
+                    anchors.leftMargin: 20
+                    textFormat: Text.PlainText
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.left: parent.left
+                }
 
         Text {
             id: label3

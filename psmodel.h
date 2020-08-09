@@ -45,6 +45,7 @@ class cPSmodel : public QObject
     Q_PROPERTY(int port READ port WRITE setPort NOTIFY portChanged)
     Q_PROPERTY(int timer_send_interval READ timer_send_interval WRITE setTimer_send_interval NOTIFY timer_send_intervalChanged)
     Q_PROPERTY(int timer_connect_interval READ timer_connect_interval WRITE setTimer_connect_interval NOTIFY timer_connect_intervalChanged)
+    Q_PROPERTY(int disconnect_timeout MEMBER m_disconnect_timeout  NOTIFY disconnect_timeoutChanged)
 
     Q_PROPERTY(int thrcurrent READ thrcurrent WRITE setThrcurrent NOTIFY thrcurrentChanged)
     Q_PROPERTY(int thrvoltage READ thrvoltage WRITE setThrvoltage NOTIFY thrvoltageChanged)
@@ -246,6 +247,7 @@ signals:
     void kvoltage2Changed();
     void kvoltage3Changed();
 
+    void disconnect_timeoutChanged();
 
 
 public slots:
@@ -291,6 +293,7 @@ private:
     int m_thrtemperature=50;
     int m_thrhumid=80;
     int m_timeout=10;
+    int m_disconnect_timeout=10000;
     unsigned int m_packetid=0;
 
     QString m_address="localhost";
