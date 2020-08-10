@@ -278,7 +278,7 @@ void cPSmodel::sendData()
             +";thrh:"+QString().number(m_thrhumid,'f',0)
             +";swto:"+QString().number(m_timeout,'f',0)
             +";pids:"+QString().number(m_packetid)
-            +";time:"+QString().number(unixTime)
+            //+";time:"+QString().number(unixTime)
             +"}FEDCA987";
 
     qDebug()<<"PS - send data: "<<Data;
