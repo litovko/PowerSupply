@@ -1,4 +1,4 @@
-import QtQuick 2.5
+import QtQuick 2.12
 
 Item {
     Rectangle {
@@ -13,7 +13,7 @@ Item {
             //anchors.fill: parent
             anchors.centerIn: parent
             anchors.margins: 10
-            spacing: 20
+            spacing: 50
 
             Text {
                 width: 50
@@ -105,6 +105,14 @@ Item {
                 height: 50
                 onMybuttonPressed: fcommand("HIOFF")
                 text: "1500 ВЫКЛ"
+            }
+            Text {
+                width: 50
+                height: 50
+                color: "#c1d177"
+                text: "v2.0"
+                verticalAlignment: Text.AlignVCenter
+                font.pointSize: 12
             }
         }
     }

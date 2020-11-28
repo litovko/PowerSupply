@@ -28,3 +28,8 @@ DISTFILES += \
     ps.ico
 #DESTDIR = D:\dest.rig.5.11
 DESTDIR = D:\dest.rig.5.12.msvc
+Kit=$$[QT_INSTALL_PREFIX]
+equals(Kit,"C:/Qt/5.15.1/msvc2019_64"){
+    message("Kit for 64 bit MSVC2019")
+    DESTDIR = d:\dest.mgm7.5.15.msvc
+}

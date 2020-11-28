@@ -1,4 +1,4 @@
-import QtQuick 2.5
+import QtQuick 2.12
 
 Item {
     Rectangle {
@@ -178,7 +178,7 @@ Item {
                         width: parent.width
                         color: "gray"
                         font.bold: true
-                        font.pointSize: 15
+                        font.pointSize: 14
                         verticalAlignment: Text.AlignVCenter
                         horizontalAlignment: Text.AlignHCenter
                         text: "МОЩН."
@@ -188,7 +188,7 @@ Item {
                         width: parent.width
                         color: "magenta"
                         font.bold: true
-                        font.pointSize: 15
+                        font.pointSize: 14
                         verticalAlignment: Text.AlignVCenter
                         horizontalAlignment: Text.AlignHCenter
                         text: "P1:" + ps.pwr1
@@ -197,7 +197,7 @@ Item {
                         height: 15
                         width: parent.width
                         color: "magenta"
-                        font.pointSize: 15
+                        font.pointSize: 14
                         verticalAlignment: Text.AlignVCenter
                         horizontalAlignment: Text.AlignHCenter
                         text: "P2:" + ps.pwr2
@@ -206,7 +206,7 @@ Item {
                         height: 15
                         width: parent.width
                         color: "magenta"
-                        font.pointSize: 15
+                        font.pointSize: 14
                         verticalAlignment: Text.AlignVCenter
                         horizontalAlignment: Text.AlignHCenter
                         text: "P3:" + ps.pwr3

@@ -264,6 +264,7 @@ public slots:
     void displayError(QAbstractSocket::SocketError socketError);
     void sendData(); //слот должен вызываться любым событием, которое меняет данные, предназначенные для отправки.
     void readData(); //расклаываем полученные от сервера данные по параметрам
+    void reset(); // обнуляем значения приборов
 private:
 
     int m_current1=0;
@@ -323,6 +324,7 @@ private:
     QTcpSocket tcpClient;
     QTimer timer_connect;
     QTimer timer_send;
+    QTimer timer_wait_reconnect;
     int m_timer_send_interval;
     int m_timer_connect_interval;
     //QSettings m_rigsettings:m_rigsettings("HYCO", "Rig Console");

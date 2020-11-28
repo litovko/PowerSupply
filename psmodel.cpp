@@ -8,7 +8,7 @@ cPSmodel::cPSmodel(QObject *parent) : QObject(parent)
     connect(this, SIGNAL(addressChanged()), this, SLOT(saveSettings()));
     connect(this, SIGNAL(timer_send_intervalChanged()), this, SLOT(updateSendTimer()));
     //connect(this, SIGNAL(portChanged()), this, SLOT(saveSettings()));
-    connect(&tcpClient, SIGNAL(connected()),this, SLOT(clientConnected())); // Клиент приконнектилася к указанному адресу по указанному порту.
+    connect(&tcpClient, SIGNAL(connected()),this, SLOT(clientConnected())); // Клиент приконнектился к указанному адресу по указанному порту.
     connect(&tcpClient, SIGNAL(disconnected()),this, SLOT(clientDisconnected())); // Клиент отвалился
     connect(&tcpClient, SIGNAL(bytesWritten(qint64)),this, SLOT(updateClientProgress(qint64)));
     connect(&tcpClient, SIGNAL(readyRead()),this, SLOT(readData()));
@@ -25,10 +25,12 @@ cPSmodel::cPSmodel(QObject *parent) : QObject(parent)
     timer_connect.start(m_timer_connect_interval);
     connect(&timer_send, SIGNAL(timeout()), this, SLOT(sendData()));
     timer_send.start(m_timer_send_interval);
+    timer_wait_reconnect.setSingleShot(true);
+    connect(&timer_wait_reconnect, SIGNAL(timeout()),this, SLOT(reset()));
 }
 void cPSmodel::saveSettings()
 {
-    qDebug()<<"v:"<<kvoltage1();
+    //qDebug()<<"v:"<<kvoltage1();
     QSettings settings; //("HYCO", "PSConsole");
     settings.setValue("PSAddress",m_address);
     settings.setValue("PSPort",m_port);
@@ -195,6 +197,7 @@ void cPSmodel::clientConnected()
 {
     qDebug()<<"PS Client connected to address >>>"<<this->address()<<" port:"<< ::QString().number(m_port);
     m_client_connected=true;
+    timer_wait_reconnect.stop();
     emit client_connectedChanged();
 }
 void cPSmodel::clientDisconnected()
@@ -202,27 +205,7 @@ void cPSmodel::clientDisconnected()
     qDebug()<<"PS Client disconnected form address >>>"<<this->address()<<" port:"<< this->port();
     setClient_connected(false);
     setGood_data(false);
-    QTimer::singleShot(m_disconnect_timeout,  [this] () {
-    if (!good_data()) {
-        setCurrent1(0);
-        setCurrent2(0);
-        setCurrent3(0);
-        setVoltage1(0);
-        setVoltage2(0);
-        setVoltage3(0);
-        setHumid(0);
-        setTemperature(0);
-        setPwr1(0);
-        setPwr2(0);
-        setPwr3(0);
-        setPwrt(0);
-        setPower380_on(false);
-        setPower2500_on(false);
-        setPacketid(0);
-        qDebug()<<"Too long to restore connection!";
-    }
-    });
-
+    timer_wait_reconnect.start(m_disconnect_timeout);
 }
 
 
@@ -255,14 +238,14 @@ void cPSmodel::sendData()
     char data[5]={0,0,0,0,0};
     data[0] = m_power2500_on*1
             + m_power380_on*2;
-            //+   m_input*4;
-            //+ m_output*8;
+    //+   m_input*4;
+    //+ m_output*8;
     QString Data; // Строка отправки данных.
-// проверяем, есть ли подключение клиента. Если подключения нет, то ничего не отправляем.
+    // проверяем, есть ли подключение клиента. Если подключения нет, то ничего не отправляем.
     if (!m_client_connected) return;
-//    Data="{ana1:"+::QString().number(int(m_joystick_y1*127/100),10)
-//        +";ana2:"+::QString().number(int(m_joystick_y2*127/100),10)
-//        +";dig1:"+::QString().number(data[0],10)+"}FEDCA987";
+    //    Data="{ana1:"+::QString().number(int(m_joystick_y1*127/100),10)
+    //        +";ana2:"+::QString().number(int(m_joystick_y2*127/100),10)
+    //        +";dig1:"+::QString().number(data[0],10)+"}FEDCA987";
     m_packetid+=1;
     Data="{cmd1:"+QString().number(data[0],10)
             +";kip1:"+QString().number(m_kcurrent1,'f',0)
@@ -310,26 +293,26 @@ void cPSmodel::readData()
         //qDebug()<<"split:"<<split;
         QListIterator<QByteArray> i(split);
         QByteArray s, val;
-        bool ok=false;        
+        bool ok=false;
         unsigned int pids=0;
         while (i.hasNext()){
-             s=i.next();
-             m=s.indexOf(":");
-             val=s.mid(m+1); //данные после ":"
-             s=s.left(m); // названия тэга
+            s=i.next();
+            m=s.indexOf(":");
+            val=s.mid(m+1); //данные после ":"
+            s=s.left(m); // названия тэга
             qDebug()<<"PS-tag:"<<s<<"value:"<<val;
 
             if (s=="pids") {
                 pids=val.toUInt(&ok,10);
                 if (pids==packetid()) {
-                       //m_packetid+=1;
-                       ok=true;
-                       qDebug()<<"ids are the same new ID="<<m_packetid;}
+                    //m_packetid+=1;
+                    ok=true;
+                    qDebug()<<"ids are the same new ID="<<m_packetid;}
                 else {
-                       setGood_data(false);
-                       qDebug()<<"ids are not the same => recieved.id:"<< pids<<"sent.id"<< packetid();
-                       return;
-                     }
+                    setGood_data(false);
+                    qDebug()<<"ids are not the same => recieved.id:"<< pids<<"sent.id"<< packetid();
+                    return;
+                }
             }
             if (s=="type") ok=(val=="pctrl");
             if (s=="temp") setTemperature(val.toInt(&ok,10));
@@ -358,11 +341,33 @@ void cPSmodel::readData()
                 }
             }
             if(!ok) {setGood_data(false); qWarning()<<"PS no good data for "<<s<<":"<<val;}
-         }
+        }
     }
     else {
         setGood_data(false);
         qWarning()<<"PS: wrong data receved";
+    }
+}
+
+void cPSmodel::reset()
+{
+    if (!client_connected()) {
+        setCurrent1(0);
+        setCurrent2(0);
+        setCurrent3(0);
+        setVoltage1(0);
+        setVoltage2(0);
+        setVoltage3(0);
+        setHumid(0);
+        setTemperature(0);
+        setPwr1(0);
+        setPwr2(0);
+        setPwr3(0);
+        setPwrt(0);
+        setPower380_on(false);
+        setPower2500_on(false);
+        setPacketid(0);
+        qDebug()<<"Too long to restore connection!";
     }
 }
 

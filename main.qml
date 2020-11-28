@@ -1,6 +1,6 @@
-import QtQuick 2.5
-import QtQuick.Window 2.0
-import Qt.labs.settings 1.0
+import QtQuick 2.12
+import QtQuick.Window 2.12
+import Qt.labs.settings 1.1
 import Gyco 1.0
 
 Window {

@@ -1,4 +1,4 @@
-import QtQuick 2.5
+import QtQuick 2.12
 import QtCharts 2.2
 
 Item {

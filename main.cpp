@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
     qInstallMessageHandler(myMessageOutput);
     toggle_log(true);
     //setlocale(LC_ALL, ""); // избавляемся от кракозябров в консоли
-    qDebug()<<QTime::currentTime().toString("hh:mm:ss:zzz ")<<"Start"<<giko_name<<"  "<<giko_program;
+    qDebug()<<QTime::currentTime().toString("hh:mm:ss:zzz ")<<"Start"<<giko_name<<"  "<<giko_program<<" v2.0";
 
     QSettings settings(giko_name, giko_program);
 
