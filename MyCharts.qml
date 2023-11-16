@@ -1,5 +1,5 @@
 import QtQuick 2.12
-import QtCharts 2.2
+import QtCharts 2.15
 
 Item {
     id: chart
