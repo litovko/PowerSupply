@@ -148,7 +148,7 @@ Item {
             Pribor {
                 height: 100
                 width: 100
-                value: ps.voltage3
+                value: ps.voltage4
                 maximumValue: 100
                 minorTickmarks: 4
                 stepSize: 20

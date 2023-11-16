@@ -6,7 +6,7 @@ import Gyco 1.0
 Window {
     id: win
     visible: true
-    title: "HYCO ИСТОЧНИК ПИТАНИЯ"
+    title: "'ГИКО' ИСТОЧНИК ПИТАНИЯ"
     color: "black"
     height: 700
     width: 1280

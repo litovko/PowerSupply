@@ -24,7 +24,8 @@ MySettingsForm {
         textInput11.text = ps.thrtemperature
         textInput12.text = ps.thrhumid
         textInput13.text = ps.minvoltage
-        print("fill:"+ps.kvoltage1)
+
+        console.log("fill:",ps.kvoltage1)
     }
 
     Component.onCompleted: fill_controls()
