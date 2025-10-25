@@ -22,6 +22,7 @@ cPSmodel::cPSmodel(QObject *parent) : QObject(parent)
     connect(this, SIGNAL(outputChanged()),this, SLOT(changeState()));
 
     connect(&timer_connect, SIGNAL(timeout()), this, SLOT(start_client()));
+    start_client();
     timer_connect.start(m_timer_connect_interval);
     connect(&timer_send, SIGNAL(timeout()), this, SLOT(sendData()));
     timer_send.start(m_timer_send_interval);
@@ -247,6 +248,7 @@ void cPSmodel::sendData()
     //        +";ana2:"+::QString().number(int(m_joystick_y2*127/100),10)
     //        +";dig1:"+::QString().number(data[0],10)+"}FEDCA987";
     m_packetid+=1;
+    //TODO Добавить коэффициенты {kip1:150;kip2:148;kip3:152;kipz:145;ku12:2850;ku13:2880;ku23:2865;kugz:2900;...}DEADBEEF
     Data="{cmd1:"+QString().number(data[0],10)
             +";kip1:"+QString().number(m_kcurrent1,'f',0)
             +";kip2:"+QString().number(m_kcurrent2,'f',0)

@@ -110,7 +110,7 @@ Item {
                 width: 50
                 height: 50
                 color: "#c1d177"
-                text: "v2.5"
+                text: "v2.6"
                 verticalAlignment: Text.AlignVCenter
                 font.pointSize: 12
             }
