@@ -1,6 +1,6 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
-#include <QQuickView>
+#include <QQmlContext>
 
 #include "psmodel.h"
 
@@ -10,6 +10,7 @@
 
 #define giko_name "HYCO"
 #define giko_program "Power Supply Console"
+#define giko_version "2.7"
 #include <stdio.h>
 #include <stdlib.h>
 #include <QFile>
@@ -45,24 +46,29 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
     switch (type) {
     case QtDebugMsg:
         fprintf(stderr, "D:%s %s (%s:%u, %s)\n",QTime::currentTime().toString("hh:mm:ss:zzz ").toLocal8Bit().data(), localMsg.constData(), context.file, context.line, context.function);
-        out<<"Debug:"<<QTime::currentTime().toString("hh:mm:ss:zzz ").toUtf8().data()<<" "<<localMsg.constData()<<"("<<context.file<<":"<<context.line<<", "<<context.function<<")\n";
+        if (logfile.isOpen())
+            out<<"Debug:"<<QTime::currentTime().toString("hh:mm:ss:zzz ").toUtf8().data()<<" "<<localMsg.constData()<<"("<<context.file<<":"<<context.line<<", "<<context.function<<")\n";
         break;
     case QtWarningMsg:
         fprintf(stderr, "W:%s %s (%s:%u, %s)\n",QTime::currentTime().toString("hh:mm:ss:zzz ").toLocal8Bit().data(), localMsg.constData(), context.file, context.line, context.function);
-        out<<"Warning:"<<QTime::currentTime().toString("hh:mm:ss:zzz ").toLocal8Bit().data()<<" "<<localMsg.constData()<<"("<<context.file<<":"<<context.line<<", "<<context.function<<")\n";
+        if (logfile.isOpen())
+            out<<"Warning:"<<QTime::currentTime().toString("hh:mm:ss:zzz ").toLocal8Bit().data()<<" "<<localMsg.constData()<<"("<<context.file<<":"<<context.line<<", "<<context.function<<")\n";
         break;
     case QtCriticalMsg:
         fprintf(stderr, "C:%s %s (%s:%u, %s)\n",QTime::currentTime().toString("hh:mm:ss:zzz ").toLocal8Bit().data(), localMsg.constData(), context.file, context.line, context.function);
-        out<<"Critical:"<<QTime::currentTime().toString("hh:mm:ss:zzz ").toLocal8Bit().data()<<" "<<localMsg.constData()<<"("<<context.file<<":"<<context.line<<", "<<context.function<<")\n";
+        if (logfile.isOpen())
+            out<<"Critical:"<<QTime::currentTime().toString("hh:mm:ss:zzz ").toLocal8Bit().data()<<" "<<localMsg.constData()<<"("<<context.file<<":"<<context.line<<", "<<context.function<<")\n";
         break;
     case QtFatalMsg:
         fprintf(stderr, "F:%s %s (%s:%u, %s)\n",QTime::currentTime().toString("hh:mm:ss:zzz ").toLocal8Bit().data(), localMsg.constData(), context.file, context.line, context.function);
-        out<<"FATAL:"<<QTime::currentTime().toString("hh:mm:ss:zzz ").toLocal8Bit().data()<<" "<<localMsg.constData()<<"("<<context.file<<":"<<context.line<<", "<<context.function<<")\n";
+        if (logfile.isOpen())
+            out<<"FATAL:"<<QTime::currentTime().toString("hh:mm:ss:zzz ").toLocal8Bit().data()<<" "<<localMsg.constData()<<"("<<context.file<<":"<<context.line<<", "<<context.function<<")\n";
         abort();
     default:
         break;
     }
-    if(logfile.isOpen()) out.flush();
+    if (logfile.isOpen())
+        out.flush();
 }
 
 
@@ -71,7 +77,7 @@ int main(int argc, char *argv[])
     qInstallMessageHandler(myMessageOutput);
     toggle_log(true);
     //setlocale(LC_ALL, ""); // избавляемся от кракозябров в консоли
-    qDebug()<<QTime::currentTime().toString("hh:mm:ss:zzz ")<<"Start"<<giko_name<<"  "<<giko_program<<" v2.6";
+    qDebug()<<QTime::currentTime().toString("hh:mm:ss:zzz ")<<"Start"<<giko_name<<"  "<<giko_program<<" v"<<giko_version;
 
     QSettings settings(giko_name, giko_program);
 
@@ -86,6 +92,7 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
+    engine.rootContext()->setContextProperty("appVersion", QVariant(QString(giko_version)));
     engine.addImportPath(QStringLiteral("qml"));
     //qDebug()<<"importPathList:"<<engine.importPathList();
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));

@@ -110,7 +110,7 @@ Item {
                 width: 50
                 height: 50
                 color: "#c1d177"
-                text: "v2.6"
+                text: "v" + appVersion
                 verticalAlignment: Text.AlignVCenter
                 font.pointSize: 12
             }

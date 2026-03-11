@@ -24,6 +24,8 @@ MySettingsForm {
         textInput11.text = ps.thrtemperature
         textInput12.text = ps.thrhumid
         textInput13.text = ps.minvoltage
+        textInput14.text = ps.thrcurz
+        textInput15.text = ps.thruuz
 
         console.log("fill:",ps.kvoltage1)
     }
@@ -51,6 +53,8 @@ MySettingsForm {
         ps.thrtemperature = parseInt(textInput11.text)
         ps.thrhumid = parseInt(textInput12.text)
         ps.minvoltage = parseInt(textInput13.text)
+        ps.thrcurz = parseInt(textInput14.text)
+        ps.thruuz = parseInt(textInput15.text)
 
         //mf.visible = false
     }

@@ -4,6 +4,8 @@ Item {
     id: form
     width: 600
     height: 600
+    property alias textInput14: textInput14
+    property alias textInput15: textInput15
     property alias textInput13: textInput13
     property alias textInput12: textInput12
     property alias textInput11: textInput11
@@ -589,6 +591,76 @@ Item {
                         color: "transparent"
                         border.color: "gray"
                     }
+                verticalAlignment: TextInput.AlignVCenter
+            }
+            anchors.leftMargin: 20
+            textFormat: Text.PlainText
+            verticalAlignment: Text.AlignVCenter
+            anchors.left: parent.left
+        }
+
+        Text {
+            id: label14
+            x: 2
+            y: 504
+            width: 448
+            height: 25
+            color: "#ffffff"
+            text: qsTr("Уставка ток curz:")
+            font.pointSize: 10
+            horizontalAlignment: Text.AlignLeft
+            TextField {
+                id: textInput14
+                width: 248
+                height: parent.height
+                color: "#ffffff"
+                text: qsTr("5")
+                validator: IntValidator{bottom: 0; top: 10000}
+                font.family: "Times New Roman"
+                horizontalAlignment: TextInput.AlignHCenter
+                font.pixelSize: 12
+                anchors.fill: parent
+                anchors.leftMargin: 140
+                background: Rectangle {
+                    anchors.fill: parent
+                    color: "transparent"
+                    border.color: "gray"
+                }
+                verticalAlignment: TextInput.AlignVCenter
+            }
+            anchors.leftMargin: 20
+            textFormat: Text.PlainText
+            verticalAlignment: Text.AlignVCenter
+            anchors.left: parent.left
+        }
+
+        Text {
+            id: label15
+            x: 2
+            y: 535
+            width: 448
+            height: 25
+            color: "#ffffff"
+            text: qsTr("Уставка напр. uuz:")
+            font.pointSize: 10
+            horizontalAlignment: Text.AlignLeft
+            TextField {
+                id: textInput15
+                width: 248
+                height: parent.height
+                color: "#ffffff"
+                text: qsTr("150")
+                validator: IntValidator{bottom: 0; top: 10000}
+                font.family: "Times New Roman"
+                horizontalAlignment: TextInput.AlignHCenter
+                font.pixelSize: 12
+                anchors.fill: parent
+                anchors.leftMargin: 140
+                background: Rectangle {
+                    anchors.fill: parent
+                    color: "transparent"
+                    border.color: "gray"
+                }
                 verticalAlignment: TextInput.AlignVCenter
             }
             anchors.leftMargin: 20

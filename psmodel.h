@@ -1,4 +1,4 @@
-﻿#ifndef RIGMODEL_H
+#ifndef RIGMODEL_H
 #define RIGMODEL_H
 
 #include <QObject>
@@ -49,10 +49,12 @@ class cPSmodel : public QObject
 
     Q_PROPERTY(int thrcurrent READ thrcurrent WRITE setThrcurrent NOTIFY thrcurrentChanged)
     Q_PROPERTY(int thrvoltage READ thrvoltage WRITE setThrvoltage NOTIFY thrvoltageChanged)
-    Q_PROPERTY(int thrtemperature READ thrtemperature WRITE setThrtemperature NOTIFY temperatureChanged)
-    Q_PROPERTY(int thrhumid READ thrhumid WRITE setThrhumid NOTIFY humidChanged)
+    Q_PROPERTY(int thrtemperature READ thrtemperature WRITE setThrtemperature NOTIFY thrtemperatureChanged)
+    Q_PROPERTY(int thrhumid READ thrhumid WRITE setThrhumid NOTIFY thrhumidChanged)
 
     Q_PROPERTY(int minvoltage READ minvoltage WRITE setMinvoltage NOTIFY minvoltageChanged)
+    Q_PROPERTY(int thrcurz READ thrcurz WRITE setThrcurz NOTIFY thrcurzChanged)
+    Q_PROPERTY(int thruuz READ thruuz WRITE setThruuz NOTIFY thruuzChanged)
 
     Q_PROPERTY(double kcurrent1 READ kcurrent1 WRITE setKcurrent1 NOTIFY kcurrent1Changed)
     Q_PROPERTY(double kcurrent2 READ kcurrent2 WRITE setKcurrent2 NOTIFY kcurrent2Changed)
@@ -178,6 +180,11 @@ public:
     int minvoltage() const;
     void setMinvoltage(int minvoltage);
 
+    int thrcurz() const;
+    void setThrcurz(int thrcurz);
+    int thruuz() const;
+    void setThruuz(int thruuz);
+
     int thrtemperature() const;
     void setThrtemperature(int thrtemperature);
 
@@ -240,6 +247,8 @@ signals:
     void thrtemperatureChanged();
     void thrhumidChanged();
     void minvoltageChanged();
+    void thrcurzChanged();
+    void thruuzChanged();
     void kcurrent1Changed();
     void kcurrent2Changed();
     void kcurrent3Changed();
@@ -291,6 +300,8 @@ private:
     int m_thrcurrent=10;
     int m_thrvoltage=2000; //максимальное напряжение на фазе
     int m_minvoltage=0; //минимальное напряжение на фазе
+    int m_thrcurz=5;   // уставка по току curz (превышение — предупреждение)
+    int m_thruuz=150;  // уставка по напряжению uuz (превышение — предупреждение)
     int m_thrtemperature=50;
     int m_thrhumid=80;
     int m_timeout=10;

@@ -37,7 +37,6 @@ void cPSmodel::saveSettings()
     settings.setValue("PSPort",m_port);
     settings.setValue("PSSendInterval",m_timer_send_interval);
     settings.setValue("PSConnectInterval",m_timer_connect_interval);
-    settings.setValue("PSConnectInterval",m_timer_connect_interval);
     settings.setValue("Kcurrent1",m_kcurrent1);
     settings.setValue("Kcurrent2",m_kcurrent2);
     settings.setValue("Kcurrent3",m_kcurrent3);
@@ -48,6 +47,8 @@ void cPSmodel::saveSettings()
     settings.setValue("THRcurrent",m_thrcurrent);
     settings.setValue("THRvoltage",m_thrvoltage);
     settings.setValue("THRminvoltage",m_minvoltage);
+    settings.setValue("THRcurz",m_thrcurz);
+    settings.setValue("THRuuz",m_thruuz);
     settings.setValue("THRtemperature",m_thrtemperature);
     settings.setValue("THRhumidity",m_thrhumid);
     settings.setValue("PStimeout",m_timeout);
@@ -75,6 +76,8 @@ void cPSmodel::readSettings()
     m_thrcurrent=settings.value("THRcurrent","10").toInt();
     m_thrvoltage=settings.value("THRvoltage","2700").toInt();
     m_minvoltage=settings.value("THRminvoltage","2300").toInt();
+    m_thrcurz=settings.value("THRcurz","5").toInt();
+    m_thruuz=settings.value("THRuuz","150").toInt();
     m_thrtemperature=settings.value("THRtemperature","60").toInt();
     m_thrhumid=settings.value("THRhumidity","80").toInt();
     m_timeout=settings.value("PStimeout","10").toInt();
@@ -87,6 +90,7 @@ void cPSmodel::readSettings()
 void cPSmodel::changeState()
 {
     m_packetid+=1; //меняем ID, чтобы пришедшие данные с текущим ИД программа уже не воспринимала.
+    if (m_packetid > 65535) m_packetid = 0;
     //sendData();
 }
 
@@ -248,6 +252,7 @@ void cPSmodel::sendData()
     //        +";ana2:"+::QString().number(int(m_joystick_y2*127/100),10)
     //        +";dig1:"+::QString().number(data[0],10)+"}FEDCA987";
     m_packetid+=1;
+    if (m_packetid > 65535) m_packetid = 0;
     //TODO Добавить коэффициенты {kip1:150;kip2:148;kip3:152;kipz:145;ku12:2850;ku13:2880;ku23:2865;kugz:2900;...}DEADBEEF
     Data="{cmd1:"+QString().number(data[0],10)
             +";kip1:"+QString().number(m_kcurrent1,'f',0)
@@ -327,7 +332,7 @@ void cPSmodel::readData()
             if (s=="cur1") setCurrent1(val.toInt(&ok,10));
             if (s=="cur2") setCurrent2(val.toInt(&ok,10));
             if (s=="cur3") setCurrent3(val.toInt(&ok,10));
-            if (s=="сurz") setCurrent4(val.toInt(&ok,10));
+            if (s=="curz") setCurrent4(val.toInt(&ok,10));
             if (s=="pwr1") setPwr1(val.toInt(&ok,10));
             if (s=="pwr2") setPwr2(val.toInt(&ok,10));
             if (s=="pwr3") setPwr3(val.toInt(&ok,10));
@@ -357,9 +362,11 @@ void cPSmodel::reset()
         setCurrent1(0);
         setCurrent2(0);
         setCurrent3(0);
+        setCurrent4(0);
         setVoltage1(0);
         setVoltage2(0);
         setVoltage3(0);
+        setVoltage4(0);
         setHumid(0);
         setTemperature(0);
         setPwr1(0);
@@ -440,7 +447,9 @@ int cPSmodel::thrhumid() const
 
 void cPSmodel::setThrhumid(int thrhumid)
 {
+    if (m_thrhumid == thrhumid) return;
     m_thrhumid = thrhumid;
+    emit thrhumidChanged();
 }
 
 int cPSmodel::thrtemperature() const
@@ -450,7 +459,9 @@ int cPSmodel::thrtemperature() const
 
 void cPSmodel::setThrtemperature(int thrtemperature)
 {
+    if (m_thrtemperature == thrtemperature) return;
     m_thrtemperature = thrtemperature;
+    emit thrtemperatureChanged();
 }
 
 int cPSmodel::minvoltage() const
@@ -461,6 +472,30 @@ int cPSmodel::minvoltage() const
 void cPSmodel::setMinvoltage(int minvoltage)
 {
     m_minvoltage = minvoltage;
+}
+
+int cPSmodel::thrcurz() const
+{
+    return m_thrcurz;
+}
+
+void cPSmodel::setThrcurz(int thrcurz)
+{
+    if (m_thrcurz == thrcurz) return;
+    m_thrcurz = thrcurz;
+    emit thrcurzChanged();
+}
+
+int cPSmodel::thruuz() const
+{
+    return m_thruuz;
+}
+
+void cPSmodel::setThruuz(int thruuz)
+{
+    if (m_thruuz == thruuz) return;
+    m_thruuz = thruuz;
+    emit thruuzChanged();
 }
 
 void cPSmodel::setThrvoltage(int thrvoltage)
@@ -491,6 +526,7 @@ int cPSmodel::voltage4() const
 void cPSmodel::setVoltage4(int voltage4)
 {
     m_voltage4 = voltage4;
+    emit voltage4Changed();
 }
 
 int cPSmodel::current4() const
@@ -501,6 +537,7 @@ int cPSmodel::current4() const
 void cPSmodel::setCurrent4(int current4)
 {
     m_current4 = current4;
+    emit current4Changed();
 }
 
 int cPSmodel::error() const

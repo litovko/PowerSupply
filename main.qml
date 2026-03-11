@@ -6,7 +6,7 @@ import Gyco 1.0
 Window {
     id: win
     visible: true
-    title: "'ГИКО' ИСТОЧНИК ПИТАНИЯ"
+    title: "'ГИКО' ИСТОЧНИК ПИТАНИЯ v" + appVersion
     color: "black"
     height: 700
     width: 1280
@@ -214,6 +214,35 @@ Window {
                 seriesName: "Сила тока"
                 chartName: "Фаза 3"
             }
+        }
+    }
+
+    // Большая красная надпись при превышении уставок curz / uuz
+    Rectangle {
+        id: overLimitOverlay
+        anchors.fill: parent
+        color: "#99000000"
+        visible: (ps.current4 > ps.thrcurz) || (ps.voltage4 > ps.thruuz)
+        z: 100
+
+        Text {
+            id: overLimitText
+            anchors.centerIn: parent
+            width: parent.width * 0.9
+            horizontalAlignment: Text.AlignHCenter
+            color: "red"
+            font.pixelSize: 72
+            font.bold: true
+            style: Text.Outline
+            styleColor: "darkred"
+
+            text: (function() {
+                if (ps.current4 > ps.thrcurz && ps.voltage4 > ps.thruuz)
+                    return "ВНИМАНИЕ!\nПРЕВЫШЕНА УСТАВКА ПО ТОКУ curz\nПРЕВЫШЕНА УСТАВКА ПО НАПРЯЖЕНИЮ uuz"
+                if (ps.current4 > ps.thrcurz)
+                    return "ВНИМАНИЕ!\nПРЕВЫШЕНА УСТАВКА ПО ТОКУ curz\n(" + ps.current4 + " > " + ps.thrcurz + ")"
+                return "ВНИМАНИЕ!\nПРЕВЫШЕНА УСТАВКА ПО НАПРЯЖЕНИЮ uuz\n(" + ps.voltage4 + " > " + ps.thruuz + ")"
+            })()
         }
     }
 }
