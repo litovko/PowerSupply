@@ -10,7 +10,7 @@
 
 #define giko_name "HYCO"
 #define giko_program "Power Supply Console"
-#define giko_version "2.7"
+#define giko_version "2.8"
 #include <stdio.h>
 #include <stdlib.h>
 #include <QFile>

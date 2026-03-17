@@ -65,7 +65,8 @@ void cPSmodel::readSettings()
     m_address=settings.value("PSAddress","localhost").toString();
     m_port=static_cast<unsigned short> (settings.value("PSPort","1212").toUInt());
     m_timer_send_interval=settings.value("PSSendInterval","2000").toInt();
-    m_timer_connect_interval=settings.value("PSConnectInterval","30000").toInt();
+    // интервалы по умолчанию уменьшены, чтобы ускорить попытки переподключения
+    m_timer_connect_interval=settings.value("PSConnectInterval","3000").toInt();
     m_kcurrent1=settings.value("Kcurrent1",1).toDouble();
     m_kcurrent2=settings.value("Kcurrent2",1).toDouble();
     m_kcurrent3=settings.value("Kcurrent3",1).toDouble();
@@ -81,7 +82,7 @@ void cPSmodel::readSettings()
     m_thrtemperature=settings.value("THRtemperature","60").toInt();
     m_thrhumid=settings.value("THRhumidity","80").toInt();
     m_timeout=settings.value("PStimeout","10").toInt();
-    m_disconnect_timeout = settings.value("disconnect_timeout","10000").toInt();
+    m_disconnect_timeout = settings.value("disconnect_timeout","3000").toInt();
 
     qInfo()<<"kvolt:"<<m_kvoltage1;
 
