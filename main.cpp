@@ -1,6 +1,7 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QSharedMemory>
 
 #include "psmodel.h"
 
@@ -10,7 +11,7 @@
 
 #define giko_name "HYCO"
 #define giko_program "Power Supply Console"
-#define giko_version "2.8"
+#define giko_version "2.10"
 #include <stdio.h>
 #include <stdlib.h>
 #include <QFile>
@@ -89,6 +90,18 @@ int main(int argc, char *argv[])
     app.setOrganizationName(giko_name);
     app.setOrganizationDomain("hyco.ru");
     app.setApplicationName(giko_program);
+
+    // Запрещаем повторный запуск приложения (single instance)
+    static const QString singleInstanceKey = QStringLiteral("HYCO_PowerSupplyConsole_single_instance");
+    QSharedMemory sharedMemory(singleInstanceKey);
+    if (sharedMemory.attach()) {
+        qWarning() << "Another instance is already running. Exiting.";
+        return 0;
+    }
+    if (!sharedMemory.create(1)) {
+        qWarning() << "Cannot create shared memory segment. Exiting.";
+        return 0;
+    }
 
     QQmlApplicationEngine engine;
 

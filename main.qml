@@ -79,7 +79,7 @@ Window {
         //color: "black";
         color: "transparent"
         anchors.fill: parent
-        border.color: "yellow"
+        border.color: win.active ? "yellow" : "gray"
         radius: 20
         border.width: 3
         focus: true
@@ -91,6 +91,8 @@ Window {
             anchors.left: parent.left
             anchors.top: parent.top
             anchors.right: parent.right
+            // "Шапка" тускнеет при неактивности, а остальной интерфейс не бледнеет.
+            opacity: win.active ? 1.0 : 0.45
         }
         ButtonBoard {
             id: bb
